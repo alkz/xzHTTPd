@@ -63,7 +63,7 @@ Config::checkConf(void)  const
                 "DirLogs"
               };   
     
-    std::ifstream f;     f.open(fileName.c_str(), std::ios::ate);
+    std::ifstream f;     f.open(fileName, std::ios::ate);
     if(!f.is_open() || !f.tellg() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
     }
@@ -103,7 +103,9 @@ Config::parse(void)
         return false;
     }
 
-    std::ifstream f;    f.open(fileName.c_str());
+    std::cout << "qui si";
+
+    std::ifstream f;    f.open(fileName);
     if(! f.is_open() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
     }

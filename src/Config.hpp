@@ -55,8 +55,8 @@ class Config
     private:
 
         bool inited;
-        Parameters params;
-        std::string fileName;
+        mutable Parameters params;
+        const char* fileName;
         
 };
 

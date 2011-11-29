@@ -18,7 +18,7 @@
 
 
 #ifndef __XZHTTPD__EXCEPTION_CPP__
-#define __XZHTTPD__EXCPETION_CPP__
+#define __XZHTTPD__EXCEPTION_CPP__
 
 
 #include "Exception.hpp"
@@ -85,5 +85,3 @@ Exception::what() const throw()
 
 
 #endif
-
-

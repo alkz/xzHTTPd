@@ -18,7 +18,7 @@
 
 
 #ifndef __XZHTTPD__EXCEPTION_HPP__
-#define __XZHTTPD__EXCPETION_HPP__
+#define __XZHTTPD__EXCEPTION_HPP__
 
 
 #include <exception>

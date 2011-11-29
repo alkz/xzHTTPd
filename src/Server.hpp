@@ -22,6 +22,7 @@
 
 
 #include "Config.hpp"
+#include "Socket.hpp"
 
 
 namespace xzHTTPd  {
@@ -36,16 +37,14 @@ class Server
         
         Server(Config::Config*);
 
-        bool init (void);
         bool start(void);
         bool stop (void);
 
 
     private:
 
-        bool inited;
         Config::Config* fileConf;
-
+        Socket* ServerSocket;
         
 };
 

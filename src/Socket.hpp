@@ -46,8 +46,8 @@ class Socket
 
     private:
 
-        bool listen(void);
-        bool bind  (void);
+        bool listen(unsigned int);
+        bool bind  (unsigned int);
         
 
     private:

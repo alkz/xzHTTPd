@@ -32,23 +32,14 @@ namespace Server  {
 
 Server::Server(Config::Config* file)
 {
-    fileConf = new Config(file);
-    inited = false;
+    fileConf = new Config::Config(*file);
 }
 
 
 
 bool
-Server::init(void)
+Server::start(void)
 {
-    if(!inited)  {
-//        chdir(fileConf
-        
-
-        return true;
-    } else  {
-        return false;
-    }
 
 }
 

@@ -24,7 +24,7 @@
 #include "Socket.hpp"
 
 
-namespace zxHTTPd  {
+namespace xzHTTPd  {
 
 
 namespace Server  {
@@ -38,7 +38,7 @@ Socket::Socket(unsigned int port, unsigned int maxConnections)
         throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
     } 
 
-    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE )  {
+    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE ) )  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_ADDR_INIT) );
     }
 
@@ -59,7 +59,7 @@ Socket::~Socket()
 
 
 bool
-Socket::bind(unsigned int port)
+Server::Socket::bind(unsigned int port)
 {
     if( (PR_Bind(sock, addr)) == PR_FAILURE )  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_BIND) );
@@ -71,7 +71,7 @@ Socket::bind(unsigned int port)
 bool
 Socket::listen(unsigned int maxConnections)
 {
-    if( (PR_Listen(sock, maxConnections) == PR_FAILURE )  {
+    if( (PR_Listen(sock, maxConnections) == PR_FAILURE) )  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_LISTEN) );
     }
 }
@@ -85,6 +85,7 @@ Socket::recv(void)
     char* buffer[2000];
 
 
+    // ...
 }
 
 
