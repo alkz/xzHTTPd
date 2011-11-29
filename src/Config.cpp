@@ -21,7 +21,7 @@
 #define __XZHTTPD__CONFIG_CPP__ 
 
 
-#include "include/Config.hpp"
+#include "Config.hpp"
 
 
 namespace xzHTTPd  {
@@ -30,22 +30,27 @@ namespace xzHTTPd  {
 namespace Config  {
 
 
-#include <algorithm>
-#include <cstring>
-
-
 Config::Config(const char* name)
 {
     fileName = name;
     if(! (inited = parse()) )  {
-        throw( Exception(Exception::CONFIG_PARSE_FILE) );
+        throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
     }
 }
 
 
 
+Config::Config(const Config& c)
+{
+    inited = c.inited;
+    params = c.params;
+    fileName = c.fileName;
+}
+
+
+
 bool
-Config::checkConf(void)
+Config::checkConf(void)  const
 {
     static const unsigned int NPAR = 5;
     // These words will be taken into the conf file
@@ -58,12 +63,12 @@ Config::checkConf(void)
                 "DirLogs"
               };   
     
-    std::ifstream f;     f.open(fileName, std::ios::ate);
+    std::ifstream f;     f.open(fileName.c_str(), std::ios::ate);
     if(!f.is_open() || !f.tellg() )  {
-        throw( Exception(Exception::CONFIG_OPEN_FILE) );
+        throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
     }
 
-    char buffer[400] = 0;
+    char buffer[400];
     bool isValid = false;
 
     f.seekg(0);
@@ -98,12 +103,12 @@ Config::parse(void)
         return false;
     }
 
-    std::ifstream f;    f.open(fileName);
+    std::ifstream f;    f.open(fileName.c_str());
     if(! f.is_open() )  {
-        throw( Exception(Exception::CONFIG_OPEN_FILE) );
+        throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
     }
 
-    char buffer[400] = 0;
+    char buffer[400];
 
     while(! f.eof())  {
         f.getline(buffer, sizeof(buffer), ' ');
@@ -136,6 +141,14 @@ std::string
 Config::getFileName(void)  const
 {
     return (fileName);
+}
+
+
+
+bool
+Config::isInited(void) const
+{
+    return inited;
 }
 
 

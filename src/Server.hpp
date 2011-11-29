@@ -17,75 +17,37 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SOCKET_CPP__
-#define __XZHTTPD__SOCKET_CPP__
+#ifndef __XZHTTPD__SERVER_HPP__
+#define __XZHTTPD__SERVER_HPP__ 
 
 
-#include "Socket.hpp"
+#include "Config.hpp"
 
 
-namespace zxHTTPd  {
+namespace xzHTTPd  {
 
 
 namespace Server  {
 
 
-Socket::Socket(unsigned int port, unsigned int maxConnections)
+class Server
 {
-    addr = new PRNetAddr;
+    public:
+        
+        Server(Config::Config*);
 
-    if(! (sock = PR_NewTCPSocket()) )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
-    } 
-
-    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_ADDR_INIT) );
-    }
-
-    bind(port);
-    listen(maxConnections);
-}
+        bool init (void);
+        bool start(void);
+        bool stop (void);
 
 
+    private:
 
-Socket::~Socket()
-{
-    delete sock;
-    delete addr;
-    sock = NULL;
-    addr = NULL;
-}
+        bool inited;
+        Config::Config* fileConf;
 
-
-
-bool
-Socket::bind(unsigned int port)
-{
-    if( (PR_Bind(sock, addr)) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_BIND) );
-    }
-}
-
-
-
-bool
-Socket::listen(unsigned int maxConnections)
-{
-    if( (PR_Listen(sock, maxConnections) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_LISTEN) );
-    }
-}
-
-
-
-std::string
-Socket::recv(void)
-{
-    std::string toReturn;
-    char* buffer[2000];
-
-
-}
+        
+};
 
 
 }

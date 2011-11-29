@@ -17,75 +17,45 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SOCKET_CPP__
-#define __XZHTTPD__SOCKET_CPP__
+#ifndef __XZHTTPD__EXCEPTION_HPP__
+#define __XZHTTPD__EXCPETION_HPP__
 
 
-#include "Socket.hpp"
+#include <exception>
+#include <string>
 
 
-namespace zxHTTPd  {
+namespace xzHTTPd  {
 
 
-namespace Server  {
+namespace Exception {
 
 
-Socket::Socket(unsigned int port, unsigned int maxConnections)
+class Exception : public std::exception
 {
-    addr = new PRNetAddr;
+    public:
 
-    if(! (sock = PR_NewTCPSocket()) )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
-    } 
+        static const unsigned int SOCKET_CREATE     = 1001;
+        static const unsigned int SOCKET_ADDR_INIT  = 1002;
+        static const unsigned int SOCKET_BIND       = 1003;
+        static const unsigned int SOCKET_LISTEN     = 1004;
 
-    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_ADDR_INIT) );
-    }
+        static const unsigned int CONFIG_OPEN_FILE   = 2001;
+        static const unsigned int CONFIG_PARSE_FILE  = 2002;
 
-    bind(port);
-    listen(maxConnections);
-}
+    public:
 
+        Exception(unsigned int code =0);
+        virtual ~Exception() throw();
 
+        virtual const char* what() const throw();
 
-Socket::~Socket()
-{
-    delete sock;
-    delete addr;
-    sock = NULL;
-    addr = NULL;
-}
+    private:
 
+        std::string desc;
 
-
-bool
-Socket::bind(unsigned int port)
-{
-    if( (PR_Bind(sock, addr)) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_BIND) );
-    }
-}
-
-
-
-bool
-Socket::listen(unsigned int maxConnections)
-{
-    if( (PR_Listen(sock, maxConnections) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_LISTEN) );
-    }
-}
-
-
-
-std::string
-Socket::recv(void)
-{
-    std::string toReturn;
-    char* buffer[2000];
-
-
-}
+        
+};
 
 
 }

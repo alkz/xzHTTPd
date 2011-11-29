@@ -21,7 +21,7 @@
 #define __XZHTTPD__SERVER_CPP__ 
 
 
-#include "include/Server.hpp"
+#include "Server.hpp"
 
 
 namespace xzHTTPd  {
@@ -30,9 +30,9 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-Server::Server(Config::Config file)
+Server::Server(Config::Config* file)
 {
-    fileConf = file;
+    fileConf = new Config(file);
     inited = false;
 }
 
@@ -42,7 +42,7 @@ bool
 Server::init(void)
 {
     if(!inited)  {
-        chdir(
+//        chdir(fileConf
         
 
         return true;

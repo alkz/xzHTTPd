@@ -17,75 +17,48 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SOCKET_CPP__
-#define __XZHTTPD__SOCKET_CPP__
+#ifndef __XZHTTPD__CONFIG_HPP__
+#define __XZHTTPD__CONFIG_HPP__ 
 
 
-#include "Socket.hpp"
+#include <fstream>
+#include <map>
+#include <string>
+#include <algorithm>
+#include <cstring>
+
+#include "Exception.hpp"
 
 
-namespace zxHTTPd  {
+namespace xzHTTPd  {
 
 
-namespace Server  {
+namespace Config  {
 
 
-Socket::Socket(unsigned int port, unsigned int maxConnections)
+class Config
 {
-    addr = new PRNetAddr;
+    typedef   std::map<std::string, std::string>    Parameters;
+    typedef   std::pair<std::string, std::string>   Parameter;
 
-    if(! (sock = PR_NewTCPSocket()) )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
-    } 
+    public:
 
-    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_ADDR_INIT) );
-    }
+        Config(const char* );
+        Config(const Config&);
 
-    bind(port);
-    listen(maxConnections);
-}
+        bool checkConf(void) const;
+        bool parse(void);
+        std::string getParamVal (std::string) const;
+        std::string getFileName (void) const;
+        bool isInited(void) const;
 
+    private:
 
-
-Socket::~Socket()
-{
-    delete sock;
-    delete addr;
-    sock = NULL;
-    addr = NULL;
-}
-
-
-
-bool
-Socket::bind(unsigned int port)
-{
-    if( (PR_Bind(sock, addr)) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_BIND) );
-    }
-}
-
-
-
-bool
-Socket::listen(unsigned int maxConnections)
-{
-    if( (PR_Listen(sock, maxConnections) == PR_FAILURE )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_LISTEN) );
-    }
-}
-
-
-
-std::string
-Socket::recv(void)
-{
-    std::string toReturn;
-    char* buffer[2000];
-
-
-}
+        bool inited;
+        Parameters params;
+        std::string fileName;
+        
+};
 
 
 }

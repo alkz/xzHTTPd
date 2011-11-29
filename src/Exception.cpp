@@ -21,13 +21,63 @@
 #define __XZHTTPD__EXCPETION_CPP__
 
 
-#include "include/Exception.hpp"
+#include "Exception.hpp"
 
 
 namespace xzHTTPd  {
 
 
 namespace Exception  {
+
+
+Exception::Exception(unsigned int code)
+{
+    switch(code)  {
+        case SOCKET_CREATE:
+            desc = "Could not create Socket";
+            break;
+
+        case SOCKET_ADDR_INIT:
+            desc = "Could not initialize address";
+            break;
+
+        case SOCKET_BIND:
+            desc = "Could not bind the socket to address";
+            break;
+
+        case SOCKET_LISTEN:
+            desc = "Could not put the socket on listening";
+            break;
+            
+        case CONFIG_OPEN_FILE:
+            desc = "Could not open config file";
+            break;
+
+        case CONFIG_PARSE_FILE:
+            desc = "Error while parsing conf file (syntax error)";
+            break;
+
+        default:
+            desc = "You did soomething wrong";
+    }
+
+}
+
+
+
+Exception::~Exception() throw()
+{
+}
+
+
+
+const char*
+Exception::what() const throw()
+{
+    return desc.c_str();
+}
+
+
 }
 
 
