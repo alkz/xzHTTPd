@@ -34,31 +34,35 @@ Exception::Exception(unsigned int code)
 {
     switch(code)  {
         case SOCKET_CREATE:
-            desc = "Could not create Socket";
+            desc = "Could not create Socket.";
             break;
 
         case SOCKET_ADDR_INIT:
-            desc = "Could not initialize address";
+            desc = "Could not initialize address.";
             break;
 
         case SOCKET_BIND:
-            desc = "Could not bind the socket to address";
+            desc = "Could not bind the socket to address.";
             break;
 
         case SOCKET_LISTEN:
-            desc = "Could not put the socket on listening";
+            desc = "Could not put the socket on listening.";
             break;
             
         case CONFIG_OPEN_FILE:
-            desc = "Could not open config file";
+            desc = "Could not open config file.";
             break;
 
         case CONFIG_PARSE_FILE:
-            desc = "Error while parsing conf file (syntax error)";
+            desc = "Error while parsing conf file (syntax error).";
+            break;
+
+        case SERVER_START:
+            desc = "Could not start xzHTTPd.";
             break;
 
         default:
-            desc = "You did soomething wrong";
+            desc = "You did something wrong.";
     }
 
 }

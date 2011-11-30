@@ -35,6 +35,7 @@ class Exception : public std::exception
 {
     public:
 
+
         static const unsigned int SOCKET_CREATE     = 1001;
         static const unsigned int SOCKET_ADDR_INIT  = 1002;
         static const unsigned int SOCKET_BIND       = 1003;
@@ -42,6 +43,8 @@ class Exception : public std::exception
 
         static const unsigned int CONFIG_OPEN_FILE   = 2001;
         static const unsigned int CONFIG_PARSE_FILE  = 2002;
+
+        static const unsigned int SERVER_START = 3001;
 
     public:
 

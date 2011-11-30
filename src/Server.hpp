@@ -21,6 +21,10 @@
 #define __XZHTTPD__SERVER_HPP__ 
 
 
+#include <unistd.h>
+#include <cstdlib>
+
+
 #include "Config.hpp"
 #include "Socket.hpp"
 
@@ -37,7 +41,7 @@ class Server
         
         Server(Config::Config*);
 
-        bool start(void);
+        bool start(bool);
         bool stop (void);
 
 

@@ -24,8 +24,8 @@
 #include <fstream>
 #include <map>
 #include <string>
-#include <algorithm>
 #include <cstring>
+#include <vector>
 
 #include "Exception.hpp"
 
@@ -46,16 +46,15 @@ class Config
         Config(const char* );
         Config(const Config&);
 
-        bool checkConf(void) const;
         bool parse(void);
-        std::string getParamVal (std::string) const;
-        std::string getFileName (void) const;
+        std::string& getParamVal (const std::string&) const;
+        const char* getFileName (void) const;
         bool isInited(void) const;
 
     private:
 
-        bool inited;
         mutable Parameters params;
+        bool inited;
         const char* fileName;
         
 };

@@ -50,7 +50,7 @@ Config::Config(const Config& c)
 
 
 bool
-Config::checkConf(void)  const
+Config::parse(void)
 {
     static const unsigned int NPAR = 5;
     // These words will be taken into the conf file
@@ -60,7 +60,7 @@ Config::checkConf(void)  const
                 "MaxConnections",
                 "DirHtdocs",
                 "FileIndex",
-                "DirLogs"
+                "DirLog"
               };   
     
     std::ifstream f;     f.open(fileName, std::ios::ate);
@@ -69,77 +69,70 @@ Config::checkConf(void)  const
     }
 
     char buffer[400];
-    bool isValid = false;
+    int paramCount = 0;
 
     f.seekg(0);
     do  {
-        f.getline(buffer, sizeof(buffer), ' ');
+        f.getline(buffer, sizeof(buffer));
 
-        if(buffer[0] == '#')  {
+        if(buffer[0] == '#' || strlen(buffer) == 0)  {
             continue;
         }
 
+        char* token = std::strtok(buffer, " ");
+        unsigned int n_tokens = 0;
+        std::vector<const char*> par;
 
-        for (int i = 0; i < NPAR; i++)  {
-            if(std::strcmp(parameterName[i], buffer) == 0)  {
-                isValid = true;
-                break;
+        while(token && (n_tokens < 3))  {
+            n_tokens++;
+
+            par.push_back(token);
+            token = strtok(NULL, " ");
+        }
+
+        if(n_tokens > 2)  {
+            return false;
+
+        } else  {
+            bool found = false;
+
+            for(int i = 0; i < NPAR; i++)  {
+                if( (std::strcmp(parameterName[i], par[0])) == 0)  {
+                    paramCount++;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found)  {
+                return false;
+            } else  {
+                params.insert( Parameter(std::string(par[0]), std::string(par[1])) );
             }
         }
 
         f.getline(buffer, sizeof(buffer));
-    } while( (!f.eof()) && isValid);
+    } while( !f.eof() );
 
-
-    return isValid;
-}
-
-
-
-bool
-Config::parse(void)
-{
-    if(! checkConf() )  {
+    if(paramCount < NPAR)  {
         return false;
+    } else  {
+        return true;
     }
-
-    std::cout << "qui si";
-
-    std::ifstream f;    f.open(fileName);
-    if(! f.is_open() )  {
-        throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
-    }
-
-    char buffer[400];
-
-    while(! f.eof())  {
-        f.getline(buffer, sizeof(buffer), ' ');
-        std::string paramName = buffer;
-        f.getline(buffer, sizeof(buffer));
-        std::string paramVal  = buffer;
-
-        if(buffer[0] == '#')  {
-            continue;
-        }
-
-        params.insert(Parameter(paramName, paramVal));
-    }
-
-
-    return true;
 }
 
 
 
-std::string
-Config::getParamVal(std::string key)  const
+
+std::string&
+Config::getParamVal(const std::string& key)  const
 {
     return (params[key]);
 }
 
 
 
-std::string
+const char*
 Config::getFileName(void)  const
 {
     return (fileName);

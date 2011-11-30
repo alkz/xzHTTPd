@@ -32,14 +32,24 @@ namespace Server  {
 
 Server::Server(Config::Config* file)
 {
-    fileConf = new Config::Config(*file);
+    fileConf = file;
 }
 
 
 
 bool
-Server::start(void)
+Server::start(bool deamon)
 {
+    if(deamon)  {
+        if(fork())  {
+            std::exit(0);
+        } 
+    }
+
+//        throw ( Exception::Exception(Exception::Exception::SERVER_START) );
+    while(1)  {
+        // ASDASCASODVOKLAJPSCLKJZSV
+    }
 
 }
 
