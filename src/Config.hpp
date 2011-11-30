@@ -54,7 +54,6 @@ class Config
     private:
 
         mutable Parameters params;
-        bool inited;
         const char* fileName;
         
 };

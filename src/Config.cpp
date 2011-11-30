@@ -33,7 +33,7 @@ namespace Config  {
 Config::Config(const char* name)
 {
     fileName = name;
-    if(! (inited = parse()) )  {
+    if(! parse() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
     }
 }
@@ -125,14 +125,6 @@ const char*
 Config::getFileName(void)  const
 {
     return (fileName);
-}
-
-
-
-bool
-Config::isInited(void) const
-{
-    return inited;
 }
 
 
