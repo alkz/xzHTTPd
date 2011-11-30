@@ -40,15 +40,6 @@ Config::Config(const char* name)
 
 
 
-Config::Config(const Config& c)
-{
-    inited = c.inited;
-    params = c.params;
-    fileName = c.fileName;
-}
-
-
-
 bool
 Config::parse(void)
 {

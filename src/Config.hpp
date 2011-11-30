@@ -45,7 +45,6 @@ class Config
     public:
 
         Config(const char* );
-        Config(const Config&);
 
         bool parse(void);
         std::string& getParamVal (const std::string&) const;
