@@ -43,12 +43,10 @@ class Socket
         std::string recv(void);
         bool send(std::string);
 
-
     private:
 
         bool listen(unsigned int);
         bool bind  (unsigned int);
-        
 
     private:
 

@@ -53,7 +53,6 @@ bool
 Config::parse(void)
 {
     static const unsigned int NPAR = 5;
-    // These words will be taken into the conf file
     static const char* parameterName[NPAR] = 
               { 
                 "ServerPort",
@@ -120,7 +119,6 @@ Config::parse(void)
         return true;
     }
 }
-
 
 
 

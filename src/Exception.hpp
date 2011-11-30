@@ -35,7 +35,6 @@ class Exception : public std::exception
 {
     public:
 
-
         static const unsigned int SOCKET_CREATE     = 1001;
         static const unsigned int SOCKET_ADDR_INIT  = 1002;
         static const unsigned int SOCKET_BIND       = 1003;
@@ -57,7 +56,6 @@ class Exception : public std::exception
 
         std::string desc;
 
-        
 };
 
 

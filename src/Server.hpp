@@ -44,7 +44,6 @@ class Server
         bool start(bool);
         bool stop (void);
 
-
     private:
 
         Config::Config* fileConf;

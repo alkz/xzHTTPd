@@ -46,9 +46,9 @@ Server::start(bool deamon)
         } 
     }
 
-//        throw ( Exception::Exception(Exception::Exception::SERVER_START) );
     while(1)  {
-        // ASDASCASODVOKLAJPSCLKJZSV
+        // AKJDSVPAOSDVPAOKSDV
+        // LKDKSVJDKFSKLDFLKSK
     }
 
 }
