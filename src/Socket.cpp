@@ -41,14 +41,6 @@ Socket::Socket(bool init)
 
 
 
-Socket::Socket(const Socket& s);
-{
-    sock = new Socket();
-
-}
-
-
-
 Socket::~Socket()
 {
     delete sock;
