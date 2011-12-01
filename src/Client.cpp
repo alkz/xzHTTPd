@@ -17,45 +17,21 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CONFIG_HPP__
-#define __XZHTTPD__CONFIG_HPP__ 
-
-
-#include <fstream>
-#include <map>
-#include <string>
-#include <cstring>
-#include <vector>
-
-
-#include "Exception.hpp"
+#ifndef __XZHTTPD__CLIENT_CPP__
+#define __XZHTTPD__CLIENT_CPP__ 
 
 
 namespace xzHTTPd  {
 
 
-namespace Config  {
+namespace Server  {
 
 
-class Config
+Client::Client(Socket* sock)
 {
-    typedef   std::map<std::string, std::string>    Parameters;
-    typedef   std::pair<std::string, std::string>   Parameter;
+    clientSocket = sock;
 
-    public:
-
-        Config(const char* );
-
-        bool parse(void);
-        std::string& getParamVal (const std::string&) const;
-        const char* getFileName (void) const;
-
-    private:
-
-        mutable Parameters params;
-        const char* fileName;
-        
-};
+}
 
 
 }

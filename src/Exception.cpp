@@ -61,6 +61,14 @@ Exception::Exception(unsigned int code)
             desc = "Could not start xzHTTPd.";
             break;
 
+        case SERVER_CREATE_THREAD:
+            desc = "Could not create a new thread for client connected";
+            break;
+
+        case SERVER_JOIN_THREAD:
+            desc = "Could not join the client thread.";
+            break;
+
         default:
             desc = "You did something wrong.";
     }

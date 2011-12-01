@@ -23,6 +23,7 @@
 
 #include <unistd.h>
 #include <cstdlib>
+#include <prthread.h>
 
 
 #include "Config.hpp"
@@ -41,12 +42,12 @@ class Server
         
         Server(Config::Config*);
 
-        bool start(bool);
+        void start(bool);
         bool stop (void);
 
     private:
 
-        Config::Config* fileConf;
+        Config::Config* ServerConf;
         Socket* ServerSocket;
         
 };

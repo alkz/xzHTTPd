@@ -38,22 +38,22 @@ class Socket
 {
     public: 
 
-        Socket(unsigned int, unsigned int);
+        Socket(bool init =true);
         ~Socket();
+
+
+        void bind  (unsigned int);
+        void listen(unsigned int);
+
+        void accept(void);
 
         std::string recv(void);
         bool send(std::string);
 
     private:
 
-        bool listen(unsigned int);
-        bool bind  (unsigned int);
-
-    private:
-
         PRFileDesc* sock;
         PRNetAddr*  addr;
-        
 };
 
     

@@ -43,7 +43,9 @@ class Exception : public std::exception
         static const unsigned int CONFIG_OPEN_FILE   = 2001;
         static const unsigned int CONFIG_PARSE_FILE  = 2002;
 
-        static const unsigned int SERVER_START = 3001;
+        static const unsigned int SERVER_START          = 3001;
+        static const unsigned int SERVER_CREATE_THREAD  = 3002;
+        static const unsigned int SERVER_JOIN_THREAD    = 3003;
 
     public:
 

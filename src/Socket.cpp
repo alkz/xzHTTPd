@@ -30,20 +30,21 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-Socket::Socket(unsigned int port, unsigned int maxConnections)
+Socket::Socket(bool init)
 {
-    addr = new PRNetAddr;
-
-    if(! (sock = PR_NewTCPSocket()) )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
-    } 
-
-    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE ) )  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_ADDR_INIT) );
+    if(init)  {
+        if(! (sock = PR_NewTCPSocket()) )  {
+            throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
+        } 
     }
+}
 
-    bind(port);
-    listen(maxConnections);
+
+
+Socket::Socket(const Socket& s);
+{
+    sock = new Socket();
+
 }
 
 
@@ -58,9 +59,15 @@ Socket::~Socket()
 
 
 
-bool
+void
 Server::Socket::bind(unsigned int port)
 {
+    addr = new PRNetAddr;
+
+    if( (PR_InitializeNetAddr(PR_IpAddrAny, port, addr) == PR_FAILURE ) )  {
+        throw ( Exception::Exception(Exception::Exception::SOCKET_ADDR_INIT) );
+    }
+
     if( (PR_Bind(sock, addr)) == PR_FAILURE )  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_BIND) );
     }
@@ -68,12 +75,23 @@ Server::Socket::bind(unsigned int port)
 
 
 
-bool
+void
 Socket::listen(unsigned int maxConnections)
 {
     if( (PR_Listen(sock, maxConnections) == PR_FAILURE) )  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_LISTEN) );
     }
+}
+
+
+
+Socket* 
+Socket::accept(void)
+{
+    Socket* client = new Socket(false);
+    client->sock = PR_Accept(server, client->addr, PR_INTERVAL_NO_TIMEOUT);
+
+    return (this);
 }
 
 

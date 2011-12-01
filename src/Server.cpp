@@ -32,12 +32,12 @@ namespace Server  {
 
 Server::Server(Config::Config* file)
 {
-    fileConf = file;
+    ServerConf = file;
 }
 
 
 
-bool
+void
 Server::start(bool deamon)
 {
     if(deamon)  {
@@ -46,11 +46,41 @@ Server::start(bool deamon)
         } 
     }
 
+    ServerSocket = new Socket();
+    ServerSocket->bind( std::atoi(ServerConf->getParamVal("ServerPort").c_str()) );
+    ServerSocket->listen( std::atoi(ServerConf->getParamVal("MaxConnections").c_str()) );
+
     while(1)  {
-        // AKJDSVPAOSDVPAOKSDV
-        // LKDKSVJDKFSKLDFLKSK
+
+        Socket* client = sock->accept();
+        PRThread* threadClient;
+        threadClient = PR_CreateThread( 
+                                         PR_USER_THREAD,
+                                         createClient,
+                                         processClient(client),
+                                         PR_PRIORITY_NORMAL,
+                                         PR_LOCAL_THREAD,
+                                         PR_JOINABLE_THREAD,
+                                         0
+                                      );
+        if(! threadClient )  {
+            throw ( Exception::Exception(Exception::Exception::SERVER_CREATE_THREAD) );
+        }
+        
+        if (PR_JoinThread(threadClient) == PR_FAILURE)  {
+            throw ( Exception::Exception(Exception::Exception::SERVER_JOIN_THREAD) );
+        }
     }
 
+}
+
+
+
+void
+Server::processClient(Socket* sock)
+{
+    Client* 
+    PR_DetachThread();
 }
 
 
