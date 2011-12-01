@@ -59,17 +59,17 @@ Server::start(bool deamon)
     ServerSocket->listen( std::atoi(ServerConf->getParamVal("MaxConnections").c_str()) );
 
     while(1)  {
-        Socket* client = sock->accept();
         PRThread* threadClient;
         threadClient = PR_CreateThread( 
                                          PR_USER_THREAD,
-                                         createClient,
-                                         processClient(client),
+                                         processClient,
+                                         ServerSocket->accept(),
                                          PR_PRIORITY_NORMAL,
                                          PR_LOCAL_THREAD,
                                          PR_JOINABLE_THREAD,
                                          0
                                       );
+
         if(! threadClient )  {
             throw ( Exception::Exception(Exception::Exception::SERVER_CREATE_THREAD) );
         }
@@ -84,10 +84,11 @@ Server::start(bool deamon)
 
 
 void
-Server::processClient(Socket* sock)
+processClient(void* arg)
 {
-    Client* client = new Client(sock);
-    PR_DetachThread();
+    Client* client = new Client( static_cast<Socket*>(arg) );
+    client->handleRequest();
+    std::cout << "res";
 
     delete client;
 }

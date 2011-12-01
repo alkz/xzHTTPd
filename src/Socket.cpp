@@ -41,6 +41,12 @@ Socket::Socket(bool init)
 
 
 
+Socket::Socket(const Socket& sock)
+{
+}
+
+
+
 Socket::~Socket()
 {
     delete sock;
@@ -81,7 +87,7 @@ Socket*
 Socket::accept(void)
 {
     Socket* client = new Socket(false);
-    client->sock = PR_Accept(server, client->addr, PR_INTERVAL_NO_TIMEOUT);
+    client->sock = PR_Accept(sock, client->addr, PR_INTERVAL_NO_TIMEOUT);
 
     return (this);
 }
@@ -91,11 +97,27 @@ Socket::accept(void)
 std::string
 Socket::recv(void)
 {
-    std::string toReturn;
-    char* buffer[2000];
+    char buffer[2000];
+    PRInt32 res = PR_Recv(sock, buffer, sizeof(buffer), 0, PR_INTERVAL_NO_WAIT);
+
+    if(res == -1)  {
+        throw ( Exception::Exception(Exception::Exception::SOCKET_RECV) );
+    }  else if (res == 0) {
+        throw ( Exception::Exception(Exception::Exception::SOCKET_RECV_CLOSED) );
+    } else  {
+        return (std::string(buffer));
+    }
+}
 
 
-    // ...
+
+std::string
+Socket::getAddress(void)
+{
+    char buf[16];
+    PR_NetAddrToString(addr, buf, sizeof(buf));
+
+    return (std::string(buf));
 }
 
 

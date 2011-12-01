@@ -49,6 +49,15 @@ Exception::Exception(unsigned int code)
             desc = "Could not put the socket on listening.";
             break;
             
+        case SOCKET_RECV:
+            desc = "Error while reading the socket buffer.";
+            break;
+
+        case SOCKET_RECV_CLOSED:
+            desc = "Error while reading the socket buffer, connection was closed.";
+            break;
+
+            
         case CONFIG_OPEN_FILE:
             desc = "Could not open config file.";
             break;

@@ -24,10 +24,12 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <prthread.h>
+#include <iostream>
 
 
 #include "Config.hpp"
 #include "Socket.hpp"
+#include "Client.hpp"
 
 
 namespace xzHTTPd  {
@@ -52,6 +54,9 @@ class Server
         Socket* ServerSocket;
         
 };
+
+
+void processClient(void*);
 
 
 }

@@ -39,16 +39,19 @@ class Socket
     public: 
 
         Socket(bool init =true);
+        Socket(const Socket&);
         ~Socket();
 
 
         void bind  (unsigned int);
         void listen(unsigned int);
 
-        void accept(void);
+        Socket* accept(void);
 
         std::string recv(void);
         bool send(std::string);
+
+        std::string getAddress(void);
 
     private:
 
