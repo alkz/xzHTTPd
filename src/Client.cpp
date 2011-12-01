@@ -21,6 +21,12 @@
 #define __XZHTTPD__CLIENT_CPP__ 
 
 
+#include "Client.hpp"
+
+
+#include <iostream>
+
+
 namespace xzHTTPd  {
 
 
@@ -30,17 +36,29 @@ namespace Server  {
 Client::Client(Socket* sock)
 {
     clientSocket = sock;
-
-
 }
 
 
 
 Client::~Client()
 {
+    
     delete clientSocket;
     clientSocket = NULL;
+    
 }
+
+
+
+void
+Client::handleRequest(void)
+{
+    char buf[16];
+    std::cout << "Connect from: " << clientSocket->getAddress() << std::endl;
+
+    std::cout << "Request: " << clientSocket->recv() << std::endl;
+}
+
 
 
 }

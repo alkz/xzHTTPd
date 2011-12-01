@@ -21,6 +21,9 @@
 #define __XZHTTPD__CLIENT_HPP__ 
 
 
+#include "Socket.hpp"
+
+
 namespace xzHTTPd  {
 
 
