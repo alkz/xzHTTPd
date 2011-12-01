@@ -54,6 +54,7 @@ class Socket
 
         PRFileDesc* sock;
         PRNetAddr*  addr;
+
 };
 
     

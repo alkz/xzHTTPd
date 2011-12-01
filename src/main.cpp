@@ -94,6 +94,8 @@ main(int argc, char** argv)
 
     delete serverConfig;
     delete server;
+    server = NULL;
+    serverConfig = NULL;
 
     return 0;
 }

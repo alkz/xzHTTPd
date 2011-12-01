@@ -31,6 +31,15 @@ Client::Client(Socket* sock)
 {
     clientSocket = sock;
 
+
+}
+
+
+
+Client::~Client()
+{
+    delete clientSocket;
+    clientSocket = NULL;
 }
 
 

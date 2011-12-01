@@ -32,12 +32,14 @@ class Client
     public:
 
         Client(Socket*);
+        ~Client();
 
         void handleRequest(void);
 
     private:
 
         Socket* clientSocket;
+
 };
 
 

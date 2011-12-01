@@ -37,6 +37,14 @@ Server::Server(Config::Config* file)
 
 
 
+Server::~Server()
+{
+    delete ServerSocket;
+    ServerSocket = NULL;
+}
+
+
+
 void
 Server::start(bool deamon)
 {
@@ -51,7 +59,6 @@ Server::start(bool deamon)
     ServerSocket->listen( std::atoi(ServerConf->getParamVal("MaxConnections").c_str()) );
 
     while(1)  {
-
         Socket* client = sock->accept();
         PRThread* threadClient;
         threadClient = PR_CreateThread( 
@@ -79,8 +86,10 @@ Server::start(bool deamon)
 void
 Server::processClient(Socket* sock)
 {
-    Client* 
+    Client* client = new Client(sock);
     PR_DetachThread();
+
+    delete client;
 }
 
 
