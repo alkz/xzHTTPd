@@ -131,11 +131,11 @@ showHelp(void)
     std::cout << "xzHTTPd - Just a WebServer :3" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "  Usage:" << std::endl;
-    std::cout << "    -o <operation>   {start | stop | restart};"      << std::endl;
-    std::cout << "    -f <name>        Name of configuration file;"    << std::endl;
-    std::cout << "    -p               Print the parsed config file;"  << std::endl;
-    std::cout << "    -D               Do not deamonize;"              << std::endl;
-    std::cout << "    -v               Print version;"                 << std::endl;
-    std::cout << "    -h               Print this help."               << std::endl;
+    std::cout << "    -o <operation>   {start | stop | restart};"                                           << std::endl;
+    std::cout << "    -f <name>        Name of configuration file (default: /etc/xzHTTPd/xzHTTPd.conf);"    << std::endl;
+    std::cout << "    -p               Print the parsed config file;"                                       << std::endl;
+    std::cout << "    -D               Do not deamonize;"                                                   << std::endl;
+    std::cout << "    -v               Print version;"                                                      << std::endl;
+    std::cout << "    -h               Print this help."                                                    << std::endl;
     std::cout << "" << std::endl;
 }
