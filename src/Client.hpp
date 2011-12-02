@@ -21,6 +21,9 @@
 #define __XZHTTPD__CLIENT_HPP__ 
 
 
+#include <iostream>
+
+
 #include "Socket.hpp"
 
 
@@ -42,6 +45,7 @@ class Client
     private:
 
         Socket* clientSocket;
+        std::string request;
 
 };
 

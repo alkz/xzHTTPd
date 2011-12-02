@@ -54,6 +54,9 @@ Server::start(bool deamon)
         } 
     }
 
+    chdir( ServerConf->getParamVal("DirHtdocs").c_str() );
+    std::cout << "cd " << ServerConf->getParamVal("DirHtdocs") << " - 0 KILL" << std::endl; 
+
     ServerSocket = new Socket();
     ServerSocket->bind( std::atoi(ServerConf->getParamVal("ServerPort").c_str()) );
     ServerSocket->listen( std::atoi(ServerConf->getParamVal("MaxConnections").c_str()) );
@@ -82,13 +85,11 @@ Server::start(bool deamon)
 }
 
 
-
 void
 processClient(void* arg)
 {
     Client* client = new Client( static_cast<Socket*>(arg) );
     client->handleRequest();
-    std::cout << "res";
 
     delete client;
 }

@@ -24,9 +24,6 @@
 #include "Client.hpp"
 
 
-#include <iostream>
-
-
 namespace xzHTTPd  {
 
 
@@ -53,10 +50,9 @@ Client::~Client()
 void
 Client::handleRequest(void)
 {
-    char buf[16];
-    std::cout << "Connect from: " << clientSocket->getAddress() << std::endl;
-
-    std::cout << "Request: " << clientSocket->recv() << std::endl;
+    //std::cout << "Connect from: " << clientSocket->getAddress() << std::endl;
+    //std::cout << "Request: " << clientSocket->recv() << std::endl;
+    request = clientSocket->recv();
 }
 
 

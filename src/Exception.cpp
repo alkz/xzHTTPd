@@ -57,6 +57,9 @@ Exception::Exception(unsigned int code)
             desc = "Error while reading the socket buffer, connection was closed.";
             break;
 
+        case SOCKET_ACCEPT:
+            desc = "Could not connect the incoming connecion.";
+            break;
             
         case CONFIG_OPEN_FILE:
             desc = "Could not open config file.";

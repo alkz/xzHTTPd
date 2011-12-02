@@ -24,7 +24,6 @@
 #include <prnetdb.h>
 #include <string>
 
-
 #include "Exception.hpp"
 
 
@@ -39,7 +38,6 @@ class Socket
     public: 
 
         Socket(bool init =true);
-        Socket(const Socket&);
         ~Socket();
 
 

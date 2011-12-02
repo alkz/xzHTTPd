@@ -41,12 +41,6 @@ Socket::Socket(bool init)
 
 
 
-Socket::Socket(const Socket& sock)
-{
-}
-
-
-
 Socket::~Socket()
 {
     delete sock;
@@ -83,13 +77,17 @@ Socket::listen(unsigned int maxConnections)
 
 
 
-Socket* 
+Socket*
 Socket::accept(void)
 {
     Socket* client = new Socket(false);
-    client->sock = PR_Accept(sock, client->addr, PR_INTERVAL_NO_TIMEOUT);
+    client->addr = new PRNetAddr;
 
-    return (this);
+    if (! (client->sock = PR_Accept(this->sock, client->addr, PR_INTERVAL_NO_TIMEOUT)) )  {
+        throw ( Exception::Exception(Exception::Exception::SOCKET_ACCEPT) );
+    }
+
+    return (client);
 }
 
 
@@ -114,7 +112,7 @@ Socket::recv(void)
 std::string
 Socket::getAddress(void)
 {
-    char buf[16];
+    char buf[20];
     PR_NetAddrToString(addr, buf, sizeof(buf));
 
     return (std::string(buf));

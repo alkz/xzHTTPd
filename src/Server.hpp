@@ -24,7 +24,12 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <prthread.h>
-#include <iostream>
+#include <prnetdb.h>
+
+#define     DEBUG
+#ifdef DEBUG
+    #include <iostream>
+#endif
 
 
 #include "Config.hpp"
