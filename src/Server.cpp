@@ -84,6 +84,7 @@ Server::start(bool deamon)
         if (PR_JoinThread(threadClient) == PR_FAILURE)  {
             throw ( Exception::Exception(Exception::Exception::SERVER_JOIN_THREAD) );
         }
+       
     }
 
 }
@@ -92,14 +93,18 @@ Server::start(bool deamon)
 void
 processClient(void* arg)
 {
-    Client* client = NULL;
-    client = new Client( static_cast<Socket*>(arg) );
-    client->handleRequest();
-
-    if(client)  {
-        delete client;
+    try  {
+        Client* client = new Client( static_cast<Socket*>(arg) );
+        client->handleRequest();
+        
+        if(client)  {
+            delete client;
+        }
+        client = NULL;
+    } catch (Exception::Exception& e)  {
+        std::cerr << e.what() << std::endl;
     }
-    client = NULL;
+    
 }
 
 

@@ -50,13 +50,12 @@ Client::~Client()
 void
 Client::handleRequest(void)
 {
+    
     request = clientSocket->recv();
-    std::cout << request << std::endl;
     std::string s = "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n";
     s += "<html><head><title>xzHTTPd ";
     s +=  VERSION;
     s +=  "</title></head><body><h1>It works mudafucka!</h1></body></html>";
-
     clientSocket->send(s);
 }
 

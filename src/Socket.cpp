@@ -46,10 +46,7 @@ Socket::Socket(bool init)
 
 Socket::~Socket()
 {
-    if(sock)  {
-        close();
-        delete sock;
-    }
+    close();
     if(addr)  {
         delete addr;
     }
@@ -60,7 +57,7 @@ Socket::~Socket()
 
 
 void
-Server::Socket::bind(unsigned int port)
+Socket::bind(unsigned int port)
 {
     addr = new PRNetAddr;
 
@@ -88,14 +85,14 @@ Socket::listen(unsigned int maxConnections)
 Socket*
 Socket::accept(void)
 {
-    Socket* client = new Socket(false);
+    Socket* client  = new Socket(false);
     client->addr = new PRNetAddr;
 
     if (! (client->sock = PR_Accept(this->sock, client->addr, PR_INTERVAL_NO_TIMEOUT)) )  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_ACCEPT) );
     }
 
-    return (client);
+    return client;
 }
 
 
@@ -113,16 +110,28 @@ Socket::close(void)
 std::string
 Socket::recv(void)
 {
-    char buffer[2000];
-    PRInt32 res = PR_Recv(sock, buffer, sizeof(buffer), 0, PR_INTERVAL_NO_WAIT);
+    char buffer[800];
+    std::string toReturn;
+    std::size_t len;
 
-    if(res == -1)  {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_RECV) );
-    }  else if (res == 0) {
-        throw ( Exception::Exception(Exception::Exception::SOCKET_RECV_CLOSED) );
-    } else  {
-        return (std::string(buffer));
-    }
+    do  {
+        std::strcpy(buffer, "\0");
+        PRInt32 res = PR_Recv(sock, buffer, sizeof(buffer), 0, PR_INTERVAL_NO_WAIT);
+
+        len = std::strlen(buffer);
+
+        if(res == -1 && len != 0)  {
+            throw ( Exception::Exception(Exception::Exception::SOCKET_RECV) );
+        }  else if (res == 0 && len != 0) {
+            throw ( Exception::Exception(Exception::Exception::SOCKET_RECV_CLOSED) );
+        } 
+
+        if(len)  {
+            toReturn.insert(toReturn.length(), buffer);
+        }
+    } while(len);
+
+    return toReturn;
 }
 
 
