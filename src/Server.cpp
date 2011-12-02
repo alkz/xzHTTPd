@@ -57,9 +57,7 @@ Server::start(bool deamon)
         } 
     }
 
-    if ( chdir( ServerConf->getParamVal("DirHtdocs").c_str() ) == 0)  {
-        std::cout << "cd " << ServerConf->getParamVal("DirHtdocs") << " - 0 KILL" << std::endl; 
-    } else  {
+    if ( chdir( ServerConf->getParamVal("DirHtdocs").c_str() ) == -1)  {
         throw ( Exception::Exception(Exception::Exception::SERVER_CHDIR) );
     }
 
@@ -101,6 +99,7 @@ processClient(void* arg)
     if(client)  {
         delete client;
     }
+    client = NULL;
 }
 
 

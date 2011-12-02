@@ -50,8 +50,8 @@ Client::~Client()
 void
 Client::handleRequest(void)
 {
-    //std::cout << "Connect from: " << clientSocket->getAddress() << std::endl;
-    //std::cout << "Request: " << clientSocket->recv() << std::endl;
+    request = clientSocket->recv();
+    std::cout << request << std::endl;
 }
 
 
