@@ -17,48 +17,19 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CONFIG_HPP__
-#define __XZHTTPD__CONFIG_HPP__ 
+#ifndef __XZHTTPD__INCLUDER_HPP__
+#define __XZHTTPD__INCLUDER_HPP__
 
 
-#include <fstream>
-#include <map>
-#include <cstring>
-#include <vector>
+#include <iostream>
+#include <string>
 
-
-#include "includer.hpp"
+#include "Exception.hpp"
 
 
 namespace xzHTTPd  {
 
-
-namespace Config  {
-
-
-class Config
-{
-    typedef   std::map<std::string, std::string>    Parameters;
-    typedef   std::pair<std::string, std::string>   Parameter;
-
-    public:
-
-        Config(const char* );
-
-        bool parse(void);
-        std::string& getParamVal (const std::string&) const;
-        const char* getFileName (void) const;
-
-    private:
-
-        mutable Parameters params;
-        const char* fileName;
-        
-};
-
-
-}
-
+static const char* VERSION = "0.1";
 
 }
 

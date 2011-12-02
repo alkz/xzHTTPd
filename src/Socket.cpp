@@ -47,6 +47,7 @@ Socket::Socket(bool init)
 Socket::~Socket()
 {
     if(sock)  {
+        close();
         delete sock;
     }
     if(addr)  {
@@ -99,6 +100,16 @@ Socket::accept(void)
 
 
 
+void
+Socket::close(void)
+{
+    if( PR_Close(sock) == PR_FAILURE )  {
+        throw( Exception::Exception(Exception::Exception::SOCKET_CLOSE) );
+    }
+}
+
+
+
 std::string
 Socket::recv(void)
 {
@@ -111,6 +122,16 @@ Socket::recv(void)
         throw ( Exception::Exception(Exception::Exception::SOCKET_RECV_CLOSED) );
     } else  {
         return (std::string(buffer));
+    }
+}
+
+
+
+void
+Socket::send(std::string s)
+{
+    if(PR_Send(sock, s.c_str(), s.length(), 0, PR_INTERVAL_NO_WAIT) == -1)  {
+        throw ( Exception::Exception(Exception::Exception::SOCKET_SEND) );
     }
 }
 

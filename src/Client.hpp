@@ -21,9 +21,7 @@
 #define __XZHTTPD__CLIENT_HPP__ 
 
 
-#include <iostream>
-
-
+#include "includer.hpp"
 #include "Socket.hpp"
 
 

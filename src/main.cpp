@@ -25,9 +25,6 @@
 #include "Config.hpp"
 
 
-static const char* VERSION = "0.1";
-
-
 void showHelp (void);
 
 
@@ -62,7 +59,7 @@ main(int argc, char** argv)
                 break;
 
             case 'v':
-                std::cout << "xzHTTPd v" << VERSION << std::endl;
+                std::cout << "xzHTTPd v" << xzHTTPd::VERSION << std::endl;
                 return 0;
 
             case 'h':

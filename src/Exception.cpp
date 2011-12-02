@@ -61,6 +61,14 @@ Exception::Exception(unsigned int code)
             desc = "Could not connect the incoming connecion.";
             break;
 
+        case SOCKET_CLOSE:
+            desc = "Could not close socket.";
+            break;
+
+        case SOCKET_SEND:
+            desc = "Error while sending data in the socket.";
+            break;
+
         case CONFIG_OPEN_FILE:
             desc = "Could not open config file.";
             break;

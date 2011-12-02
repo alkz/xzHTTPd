@@ -21,8 +21,7 @@
 #define __XZHTTPD__EXCEPTION_HPP__
 
 
-#include <exception>
-#include <string>
+#include "includer.hpp"
 
 
 namespace xzHTTPd  {
@@ -42,6 +41,8 @@ class Exception : public std::exception
         static const unsigned int SOCKET_RECV          = 1005;
         static const unsigned int SOCKET_RECV_CLOSED   = 1006; 
         static const unsigned int SOCKET_ACCEPT        = 1007;
+        static const unsigned int SOCKET_CLOSE         = 1008;
+        static const unsigned int SOCKET_SEND          = 1009;
 
         static const unsigned int CONFIG_OPEN_FILE   = 2001;
         static const unsigned int CONFIG_PARSE_FILE  = 2002;

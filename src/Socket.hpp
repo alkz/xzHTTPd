@@ -22,10 +22,9 @@
 
 
 #include <prnetdb.h>
-#include <string>
 
 
-#include "Exception.hpp"
+#include "includer.hpp"
 
 
 namespace xzHTTPd  {
@@ -46,9 +45,10 @@ class Socket
         void listen(unsigned int);
 
         Socket* accept(void);
+        void close(void);
 
         std::string recv(void);
-        bool send(std::string);
+        void send(std::string);
 
         std::string getAddress(void);
 
