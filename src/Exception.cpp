@@ -60,7 +60,7 @@ Exception::Exception(unsigned int code)
         case SOCKET_ACCEPT:
             desc = "Could not connect the incoming connecion.";
             break;
-            
+
         case CONFIG_OPEN_FILE:
             desc = "Could not open config file.";
             break;
@@ -79,6 +79,10 @@ Exception::Exception(unsigned int code)
 
         case SERVER_JOIN_THREAD:
             desc = "Could not join the client thread.";
+            break;
+
+        case SERVER_CHDIR:
+            desc = "Failed to chdir to htdocs directory, check permissions and if the dir exists.";
             break;
 
         default:

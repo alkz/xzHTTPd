@@ -25,12 +25,7 @@
 #include <cstdlib>
 #include <prthread.h>
 #include <prnetdb.h>
-
-#define     DEBUG
-#ifdef DEBUG
-    #include <iostream>
-#endif
-
+#include <iostream>
 
 #include "Config.hpp"
 #include "Socket.hpp"

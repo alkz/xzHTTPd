@@ -33,13 +33,16 @@ namespace Server  {
 Server::Server(Config::Config* file)
 {
     ServerConf = file;
+    ServerSocket = NULL;
 }
 
 
 
 Server::~Server()
 {
-    delete ServerSocket;
+    if(ServerSocket)  {
+        delete ServerSocket;
+    }
     ServerSocket = NULL;
 }
 
@@ -54,8 +57,11 @@ Server::start(bool deamon)
         } 
     }
 
-    chdir( ServerConf->getParamVal("DirHtdocs").c_str() );
-    std::cout << "cd " << ServerConf->getParamVal("DirHtdocs") << " - 0 KILL" << std::endl; 
+    if ( chdir( ServerConf->getParamVal("DirHtdocs").c_str() ) == 0)  {
+        std::cout << "cd " << ServerConf->getParamVal("DirHtdocs") << " - 0 KILL" << std::endl; 
+    } else  {
+        throw ( Exception::Exception(Exception::Exception::SERVER_CHDIR) );
+    }
 
     ServerSocket = new Socket();
     ServerSocket->bind( std::atoi(ServerConf->getParamVal("ServerPort").c_str()) );
@@ -88,10 +94,13 @@ Server::start(bool deamon)
 void
 processClient(void* arg)
 {
-    Client* client = new Client( static_cast<Socket*>(arg) );
+    Client* client = NULL;
+    client = new Client( static_cast<Socket*>(arg) );
     client->handleRequest();
 
-    delete client;
+    if(client)  {
+        delete client;
+    }
 }
 
 

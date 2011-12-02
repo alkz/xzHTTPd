@@ -39,10 +39,10 @@ Client::Client(Socket* sock)
 
 Client::~Client()
 {
-    
-    delete clientSocket;
+    if(clientSocket)  {
+        delete clientSocket;
+    }
     clientSocket = NULL;
-    
 }
 
 
@@ -52,7 +52,6 @@ Client::handleRequest(void)
 {
     //std::cout << "Connect from: " << clientSocket->getAddress() << std::endl;
     //std::cout << "Request: " << clientSocket->recv() << std::endl;
-    request = clientSocket->recv();
 }
 
 

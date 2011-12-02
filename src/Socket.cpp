@@ -32,6 +32,9 @@ namespace Server  {
 
 Socket::Socket(bool init)
 {
+    sock = NULL;
+    addr = NULL;
+
     if(init)  {
         if(! (sock = PR_NewTCPSocket()) )  {
             throw ( Exception::Exception(Exception::Exception::SOCKET_CREATE) ); 
@@ -43,8 +46,12 @@ Socket::Socket(bool init)
 
 Socket::~Socket()
 {
-    delete sock;
-    delete addr;
+    if(sock)  {
+        delete sock;
+    }
+    if(addr)  {
+        delete addr;
+    }
     sock = NULL;
     addr = NULL;
 }
