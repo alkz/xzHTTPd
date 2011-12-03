@@ -7,7 +7,7 @@ Compiled with:
 
 To compile:
 
-    g++ nspr-config --cflags --libs -o xzHTTPd src/*.cpp src/*.hpp
+    g++ `nspr-config --cflags --libs` -o xzHTTPd src/*.cpp src/*.hpp
 
 Description:
 
