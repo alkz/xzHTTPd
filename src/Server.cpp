@@ -66,7 +66,7 @@ Server::start(bool deamon)
     ServerSocket->listen( std::atoi(ServerConf->getParamVal("MaxConnections").c_str()) );
 
     while(1)  {
-        PRThread* threadClient;
+        PRThread* threadClient = NULL;
         threadClient = PR_CreateThread( 
                                          PR_USER_THREAD,
                                          processClient,

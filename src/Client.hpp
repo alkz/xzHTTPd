@@ -21,6 +21,9 @@
 #define __XZHTTPD__CLIENT_HPP__ 
 
 
+#include <fstream>
+
+
 #include "includer.hpp"
 #include "Socket.hpp"
 
@@ -39,6 +42,10 @@ class Client
         ~Client();
 
         void handleRequest(void);
+
+    private:
+
+        const char* getFileContent(const char*);
 
     private:
 

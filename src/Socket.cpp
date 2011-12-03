@@ -137,7 +137,7 @@ Socket::recv(void)
 
 
 void
-Socket::send(std::string s)
+Socket::send(const std::string& s)
 {
     if(PR_Send(sock, s.c_str(), s.length(), 0, PR_INTERVAL_NO_WAIT) == -1)  {
         throw ( Exception::Exception(Exception::Exception::SOCKET_SEND) );
@@ -155,6 +155,34 @@ Socket::getAddress(void)
     return (std::string(buf));
 }
 
+
+
+Socket&
+Socket::operator <<(const std::string& s)
+{
+    this->send(s);
+
+    return *this;
+}
+
+
+
+Socket&
+Socket::operator >>(std::string& s)
+{
+    s = this->recv();
+
+    return *this;
+}
+
+
+/*
+Socket&
+Socket::operator >>(char* s)
+{
+    s = this->recv().c_str();
+}
+*/
 
 }
 

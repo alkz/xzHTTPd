@@ -48,10 +48,19 @@ class Socket
         Socket* accept(void);
         void close(void);
 
-        std::string recv(void);
-        void send(std::string);
 
         std::string getAddress(void);
+
+    public:
+
+        Socket& operator >>(std::string&);
+
+        Socket& operator <<(const std::string&);
+
+    private:
+
+        std::string recv(void);
+        void send(const std::string&);
 
     private:
 

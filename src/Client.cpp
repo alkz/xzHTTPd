@@ -50,15 +50,45 @@ Client::~Client()
 void
 Client::handleRequest(void)
 {
-    
-    request = clientSocket->recv();
-    std::string s = "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n";
-    s += "<html><head><title>xzHTTPd ";
-    s +=  VERSION;
-    s +=  "</title></head><body><h1>It works mudafucka!</h1></body></html>";
-    clientSocket->send(s);
+
+    Socket& socket = *clientSocket;
+    socket >> request;
+
+
+    // Bulding the response
+    std::string headerResp;
+    std::string resp;
+
+    std::size_t begin = request.find_first_of("/");
+    const char* fileName = request.substr(begin+1, request.find_first_of(" ", begin)-begin).c_str();
+
+    const char* fileContent = getFileContent(fileName);
+
+    if(! fileContent)  {
+        headerResp = "HTTP/1.0 404 Not Found\r\nConnection: close\r\nContent-Type: text/html"
+                     "\r\nServer: xzHTTPd\r\n\r\n";
+        resp       = "<html><head><title>404 - Gaypride</title></head>"
+                     "<body><h2>404 - Page not found gay</h2><hr />"
+                     "<i>xzHTTPd v";
+        resp      += VERSION;
+        resp      += "</i></body></html>";
+
+        socket << headerResp << resp;
+    } else  {
+    }
 }
 
+
+
+const char*
+Client::getFileContent(const char* name)
+{
+    std::ifstream f;     f.open(name);
+    if( !f.is_open() )  {
+        return NULL;
+    }
+    
+}
 
 
 }
