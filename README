@@ -1,1 +1,25 @@
 Yeeee a Gay WebServer, for now it supports only static pages :)
+
+Compiled with:
+   
+    g++-4.5.3
+    nspr-4.8.9
+
+To compile:
+
+    g++ nspr-config --cflags --libs -o xzHTTPd src/*.cpp src/*.hpp
+
+Description:
+
+    Server     - This is the main class, it provides to receive requests and create/join threads
+    Socket     - Just a beautiful socket management class :333
+    Config     - Parse and keep configuration parameters read from config file
+    Exception  - Let's handle exceptions in a good way
+    Client     - Each client connected
+
+    Coming soon...
+
+    Log 
+    ...
+
+
