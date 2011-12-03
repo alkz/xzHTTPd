@@ -50,17 +50,17 @@ Client::~Client()
 void
 Client::handleRequest(void)
 {
-
     Socket& socket = *clientSocket;
     socket >> request;
 
+    std::cout << request << std::endl;
 
     // Bulding the response
     std::string headerResp;
     std::string resp;
 
     std::size_t begin = request.find_first_of("/");
-    const char* fileName = request.substr(begin+1, request.find_first_of(" ", begin)-begin).c_str();
+    const char* fileName = request.substr(begin, request.find_first_of(" ", begin)-begin).insert(0, ".").c_str();
 
     const char* fileContent = getFileContent(fileName);
 
@@ -74,8 +74,13 @@ Client::handleRequest(void)
         resp      += "</h5></i></body></html>";
 
         socket << headerResp << resp;
+
     } else  {
+        resp = std::string(fileContent);
+        headerResp = "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n";
+        socket << headerResp << resp;
     }
+
 }
 
 
@@ -86,6 +91,18 @@ Client::getFileContent(const char* name)
     std::ifstream f;     f.open(name);
     if( !f.is_open() )  {
         return NULL;
+
+    }  else  {
+        std::string toReturn;
+        char buffer[800];
+        
+        while(! f.eof() )  {
+            f.read(buffer, sizeof(buffer)-1);
+            buffer[strlen(buffer)] = '\0';
+            toReturn.insert(toReturn.length(), buffer);
+        }
+
+        return (toReturn.c_str());
     }
     
 }
