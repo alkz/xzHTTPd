@@ -176,14 +176,6 @@ Socket::operator >>(std::string& s)
 }
 
 
-/*
-Socket&
-Socket::operator >>(char* s)
-{
-    s = this->recv().c_str();
-}
-*/
-
 }
 
 

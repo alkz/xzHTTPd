@@ -69,9 +69,9 @@ Client::handleRequest(void)
                      "\r\nServer: xzHTTPd\r\n\r\n";
         resp       = "<html><head><title>404 - Gaypride</title></head>"
                      "<body><h2>404 - Page not found gay</h2><hr />"
-                     "<i>xzHTTPd v";
+                     "<i><h5>xzHTTPd v";
         resp      += VERSION;
-        resp      += "</i></body></html>";
+        resp      += "</h5></i></body></html>";
 
         socket << headerResp << resp;
     } else  {
