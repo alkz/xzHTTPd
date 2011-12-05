@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "Exception.hpp"
 

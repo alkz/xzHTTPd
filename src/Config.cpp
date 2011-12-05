@@ -104,6 +104,8 @@ Config::parse(void)
         f.getline(buffer, sizeof(buffer));
     } while( !f.eof() );
 
+    f.close();
+
     if(paramCount < NPAR)  {
         return false;
     } else  {
@@ -113,7 +115,7 @@ Config::parse(void)
 
 
 
-std::string&
+std::string
 Config::getParamVal(const std::string& key)  const
 {
     return (params[key]);

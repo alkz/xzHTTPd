@@ -110,7 +110,7 @@ Socket::close(void)
 std::string
 Socket::recv(void)
 {
-    char buffer[800];
+    char buffer[800] = "\0";
     std::string toReturn;
     std::size_t len;
 

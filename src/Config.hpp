@@ -23,7 +23,6 @@
 
 #include <fstream>
 #include <map>
-#include <cstring>
 #include <vector>
 
 
@@ -46,7 +45,7 @@ class Config
         Config(const char* );
 
         bool parse(void);
-        std::string& getParamVal (const std::string&) const;
+        std::string getParamVal (const std::string&) const;
         const char* getFileName (void) const;
 
     private:

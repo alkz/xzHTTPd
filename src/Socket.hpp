@@ -22,7 +22,6 @@
 
 
 #include <prnetdb.h>
-#include <cstring>
 
 
 #include "includer.hpp"

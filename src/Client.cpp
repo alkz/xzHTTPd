@@ -53,20 +53,18 @@ Client::handleRequest(void)
     Socket& socket = *clientSocket;
     socket >> request;
 
-    std::cout << request << std::endl;
-
     // Bulding the response
     std::string headerResp;
-    std::string resp;
 
-    std::size_t begin = request.find_first_of("/");
-    const char* fileName = request.substr(begin, request.find_first_of(" ", begin)-begin).insert(0, ".").c_str();
+    std::string fileName = getFileName();
+    std::string fileContent = getFileContent(fileName);
+    std::cout << fileContent << std::endl;
 
-    const char* fileContent = getFileContent(fileName);
-
-    if(! fileContent)  {
+    if(! fileContent.length())  {
         headerResp = "HTTP/1.0 404 Not Found\r\nConnection: close\r\nContent-Type: text/html"
                      "\r\nServer: xzHTTPd\r\n\r\n";
+
+        std::string resp;
         resp       = "<html><head><title>404 - Gaypride</title></head>"
                      "<body><h2>404 - Page not found gay</h2><hr />"
                      "<i><h5>xzHTTPd v";
@@ -76,33 +74,47 @@ Client::handleRequest(void)
         socket << headerResp << resp;
 
     } else  {
-        resp = std::string(fileContent);
-        headerResp = "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n";
-        socket << headerResp << resp;
+        std::string contenType = MimeType::getMimeType(fileName);
+        headerResp = "HTTP/1.0 200 OK\r\nContent-Type: " + contenType;
+        headerResp += "\r\nServer: xzHTTPd\r\n\r\n";
+        socket << headerResp << fileContent;
     }
-
 }
 
 
 
-const char*
-Client::getFileContent(const char* name)
+std::string
+Client::getFileName(void)
 {
-    std::ifstream f;     f.open(name);
+    std::size_t begin = request.find_first_of("/");
+    std::string fileName = request.substr(
+                                           begin, 
+                                           request.find_first_of(" ", begin) - begin
+                                         ).insert(0, ".");
+
+    return fileName;
+}
+
+
+
+std::string
+Client::getFileContent(const std::string& name)
+{
+    std::ifstream f;     f.open(name.c_str(), std::ios::binary);
     if( !f.is_open() )  {
-        return NULL;
+        return (std::string(""));
 
-    }  else  {
-        std::string toReturn;
-        char buffer[800];
-        
-        while(! f.eof() )  {
-            f.read(buffer, sizeof(buffer)-1);
-            buffer[strlen(buffer)] = '\0';
-            toReturn.insert(toReturn.length(), buffer);
-        }
+    }  else  { 
+        f.seekg(0, std::ios::end);
+        unsigned int length = f.tellg(); 
+        f.seekg(0, std::ios::beg);
 
-        return (toReturn.c_str());
+        char* buffer = new char[length];    // Fuck yea
+        f.read(buffer, length);             // Double fuck yea
+
+        f.close();
+
+        return ( std::string(buffer) );
     }
     
 }
@@ -112,6 +124,5 @@ Client::getFileContent(const char* name)
 
 
 }
-
 
 #endif

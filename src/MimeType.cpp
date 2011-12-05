@@ -17,15 +17,10 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CLIENT_HPP__
-#define __XZHTTPD__CLIENT_HPP__ 
+#ifndef __XZHTTPD__MIMETYPE_CPP__
+#define __XZHTTPD__MIMETYPE_CPP__ 
 
 
-#include <fstream>
-
-
-#include "includer.hpp"
-#include "Socket.hpp"
 #include "MimeType.hpp"
 
 
@@ -35,26 +30,27 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-class Client
+std::string
+MimeType::getMimeType(const std::string& ext)
 {
-    public:
+    std::size_t beginExt = ext.find_first_of(".", 1);
+    std::string type = ext.substr(
+                                  beginExt+1, 
+                                  ext.find_first_of(
+                                                      beginExt, 
+                                                      ext.find_first_of(" ", beginExt) - beginExt
+                                                   )
+                               );
 
-        Client(Socket*);
-        ~Client();
+    for(int i = 0; Extensions[i].ext != 0; i++)  {
+        if( ! std::strcmp(Extensions[i].ext, type.c_str()) )  {
+            type = Extensions[i].contenType;
+            break;
+        }
+    }
 
-        void handleRequest(void);
-
-    private:
-
-        std::string getFileName(void);
-        std::string getFileContent(const std::string&);
-
-    private:
-
-        Socket* clientSocket;
-        std::string request;
-
-};
+    return type;
+}
 
 
 }
