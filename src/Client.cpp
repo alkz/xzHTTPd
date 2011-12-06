@@ -69,7 +69,7 @@ Client::handleRequest(void)
                      "<body><h2>404 - Page not found gay</h2><hr />"
                      "<i><h5>xzHTTPd v";
         resp      += VERSION;
-        resp      += "</h5> - 2011</i></body></html>";
+        resp      += " - 2011</h5></i></body></html>";
 
         socket << headerResp << resp;
 
