@@ -104,7 +104,7 @@ Client::getFileName()
         }
         
         delete [] tmp;
-    }  else  {
+    } else  {
         return fileName;
     }
 }
@@ -120,7 +120,7 @@ Client::getFileContent(const std::string& name)
 
     }  else  { 
         f.seekg(0, std::ios::end);
-        unsigned int length = f.tellg(); 
+        unsigned long int length = f.tellg(); 
         f.seekg(0, std::ios::beg);
 
         char* buffer = new char[length];    // Fuck yea
