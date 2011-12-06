@@ -42,14 +42,15 @@ class Config
 
     public:
 
-        Config(const char* );
+        static bool init(const char* );
 
-        bool parse(void);
-        std::string getParamVal (const std::string&) const;
-        const char* getFileName (void) const;
+        static bool parse(void);
+        static std::string getParamVal (const std::string&) const;
+        static const char* getFileName (void) const;
 
     private:
 
+        static bool inited;
         mutable Parameters params;
         const char* fileName;
         

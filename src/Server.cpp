@@ -30,24 +30,7 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-Server::Server(Config::Config* file)
-{
-    ServerConf = file;
-    ServerSocket = NULL;
-}
-
-
-
-Server::~Server()
-{
-    if(ServerSocket)  {
-        delete ServerSocket;
-    }
-    ServerSocket = NULL;
-}
-
-
-
+static
 void
 Server::start(bool deamon)
 {
@@ -57,13 +40,13 @@ Server::start(bool deamon)
         } 
     }
 
-    if ( chdir( ServerConf->getParamVal("DirHtdocs").c_str() ) == -1)  {
+    if ( chdir( Config::->getParamVal("DirHtdocs").c_str() ) == -1)  {
         throw ( Exception::Exception(Exception::Exception::SERVER_CHDIR) );
     }
 
     ServerSocket = new Socket();
-    ServerSocket->bind( std::atoi(ServerConf->getParamVal("ServerPort").c_str()) );
-    ServerSocket->listen( std::atoi(ServerConf->getParamVal("MaxConnections").c_str()) );
+    ServerSocket->bind( std::atoi(Config::->getParamVal("ServerPort").c_str()) );
+    ServerSocket->listen( std::atoi(Config::->getParamVal("MaxConnections").c_str()) );
 
     while(1)  {
         PRThread* threadClient = NULL;
@@ -88,6 +71,19 @@ Server::start(bool deamon)
     }
 
 }
+
+
+
+static
+void
+Server::stop(void)
+{
+    if(ServerSocket)  {
+        delete ServerSocket;
+    }
+    ServerSocket = NULL;
+}
+
 
 
 void

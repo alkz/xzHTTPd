@@ -30,9 +30,10 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-Client::Client(Socket* sock)
+Client::Client(Socket* sock, const char* log)
 {
     clientSocket = sock;
+    logFile = log;
 }
 
 
@@ -48,7 +49,7 @@ Client::~Client()
 
 
 void
-Client::handleRequest(void)
+Client::handleRequest(const std::string& indexes)
 {
     Socket& socket = *clientSocket;
     socket >> request;
@@ -56,7 +57,8 @@ Client::handleRequest(void)
     // Bulding the response
     std::string headerResp;
 
-    std::string fileName = getFileName();
+    std::string fileName = getFileName(indexes);
+    std::cout << fileName << std::endl;
     std::string fileContent = getFileContent(fileName);
     std::cout << fileContent << std::endl;
 
@@ -69,7 +71,7 @@ Client::handleRequest(void)
                      "<body><h2>404 - Page not found gay</h2><hr />"
                      "<i><h5>xzHTTPd v";
         resp      += VERSION;
-        resp      += "</h5></i></body></html>";
+        resp      += "</h5> - 2011</i></body></html>";
 
         socket << headerResp << resp;
 
@@ -84,7 +86,7 @@ Client::handleRequest(void)
 
 
 std::string
-Client::getFileName(void)
+Client::getFileName(const std::string& index)
 {
     std::size_t begin = request.find_first_of("/");
     std::string fileName = request.substr(
@@ -92,7 +94,17 @@ Client::getFileName(void)
                                            request.find_first_of(" ", begin) - begin
                                          ).insert(0, ".");
 
-    return fileName;
+    if(fileName.length() == 2)  {    // Faggot user didn't give a page name (length == "./")
+        char* s = std::strtok(static_cast<char *>( index.c_str() ), ",");
+        while(s)  {
+            std::ifstream f;    f.open(s);
+            if(f.is_open())  {
+                return ( fileName + s );
+            }
+        }
+    }  else  {
+        return fileName;
+    }
 }
 
 
@@ -114,7 +126,7 @@ Client::getFileContent(const std::string& name)
 
         f.close();
 
-        return ( std::string(buffer) );
+        return ( std::string(buffer, buffer + length) );
     }
     
 }

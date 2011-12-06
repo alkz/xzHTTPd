@@ -30,16 +30,20 @@ namespace xzHTTPd  {
 namespace Config  {
 
 
-Config::Config(const char* name)
+static
+bool
+(const char* name)
 {
     fileName = name;
+    inited = false;
     if(! parse() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
-    }
+    } 
 }
 
 
 
+static
 bool
 Config::parse(void)
 {
@@ -115,6 +119,7 @@ Config::parse(void)
 
 
 
+static
 std::string
 Config::getParamVal(const std::string& key)  const
 {
@@ -123,6 +128,7 @@ Config::getParamVal(const std::string& key)  const
 
 
 
+static
 const char*
 Config::getFileName(void)  const
 {

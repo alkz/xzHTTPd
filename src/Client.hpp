@@ -25,6 +25,7 @@
 
 
 #include "includer.hpp"
+#include "Config.hpp"
 #include "Socket.hpp"
 #include "MimeType.hpp"
 
@@ -39,19 +40,20 @@ class Client
 {
     public:
 
-        Client(Socket*);
+        Client(Socket*, const char*);
         ~Client();
 
-        void handleRequest(void);
+        void handleRequest(const std::string&);
 
     private:
 
-        std::string getFileName(void);
+        std::string getFileName(const std::string&);
         std::string getFileContent(const std::string&);
 
     private:
 
         Socket* clientSocket;
+        const char* logFile;
         std::string request;
 
 };

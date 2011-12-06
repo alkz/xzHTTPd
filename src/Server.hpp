@@ -42,16 +42,12 @@ namespace Server  {
 class Server
 {
     public:
-        
-        Server(Config::Config*);
-        ~Server();
 
         void start(bool);
         bool stop (void);
 
     private:
 
-        Config::Config* ServerConf;
         Socket* ServerSocket;
         
 };
