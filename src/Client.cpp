@@ -30,10 +30,10 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-Client::Client(Socket* sock, const char* log)
+Client::Client(Socket* sock, Config::Config* conf)
 {
     clientSocket = sock;
-    logFile = log;
+    serverConf = conf;
 }
 
 
@@ -49,7 +49,7 @@ Client::~Client()
 
 
 void
-Client::handleRequest(const std::string& indexes)
+Client::handleRequest(void)
 {
     Socket& socket = *clientSocket;
     socket >> request;
@@ -57,10 +57,8 @@ Client::handleRequest(const std::string& indexes)
     // Bulding the response
     std::string headerResp;
 
-    std::string fileName = getFileName(indexes);
-    std::cout << fileName << std::endl;
+    std::string fileName = getFileName();
     std::string fileContent = getFileContent(fileName);
-    std::cout << fileContent << std::endl;
 
     if(! fileContent.length())  {
         headerResp = "HTTP/1.0 404 Not Found\r\nConnection: close\r\nContent-Type: text/html"
@@ -86,7 +84,7 @@ Client::handleRequest(const std::string& indexes)
 
 
 std::string
-Client::getFileName(const std::string& index)
+Client::getFileName()
 {
     std::size_t begin = request.find_first_of("/");
     std::string fileName = request.substr(
@@ -95,13 +93,17 @@ Client::getFileName(const std::string& index)
                                          ).insert(0, ".");
 
     if(fileName.length() == 2)  {    // Faggot user didn't give a page name (length == "./")
-        char* s = std::strtok(static_cast<char *>( index.c_str() ), ",");
+        char* tmp = new char[serverConf->getParamVal("FileIndex").length()+1];
+        std::strcpy(tmp, serverConf->getParamVal("FileIndex").c_str());
+        char* s = std::strtok(tmp, ",");
         while(s)  {
             std::ifstream f;    f.open(s);
             if(f.is_open())  {
                 return ( fileName + s );
             }
         }
+        
+        delete [] tmp;
     }  else  {
         return fileName;
     }

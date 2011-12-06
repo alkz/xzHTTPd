@@ -39,15 +39,23 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
+typedef    std::pair< Socket*, Config::Config* >    ThreadData;
+
+
 class Server
 {
+
     public:
 
+        Server(Config::Config*);
+
         void start(bool);
-        bool stop (void);
+        void stop (void);
+
 
     private:
 
+        Config::Config* serverConf;
         Socket* ServerSocket;
         
 };

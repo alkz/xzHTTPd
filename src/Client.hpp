@@ -40,21 +40,21 @@ class Client
 {
     public:
 
-        Client(Socket*, const char*);
+        Client(Socket*, Config::Config*);
         ~Client();
 
-        void handleRequest(const std::string&);
+        void handleRequest(void);
 
     private:
 
-        std::string getFileName(const std::string&);
+        std::string getFileName(void);
         std::string getFileContent(const std::string&);
 
     private:
 
         Socket* clientSocket;
-        const char* logFile;
         std::string request;
+        Config::Config* serverConf;
 
 };
 

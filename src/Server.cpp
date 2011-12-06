@@ -30,7 +30,14 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-static
+Server::Server(Config::Config* conf)
+{
+    serverConf = conf;
+    ServerSocket = NULL;
+}
+
+
+
 void
 Server::start(bool deamon)
 {
@@ -40,20 +47,21 @@ Server::start(bool deamon)
         } 
     }
 
-    if ( chdir( Config::->getParamVal("DirHtdocs").c_str() ) == -1)  {
+    if ( chdir( serverConf->getParamVal("DirHtdocs").c_str() ) == -1)  {
         throw ( Exception::Exception(Exception::Exception::SERVER_CHDIR) );
     }
 
     ServerSocket = new Socket();
-    ServerSocket->bind( std::atoi(Config::->getParamVal("ServerPort").c_str()) );
-    ServerSocket->listen( std::atoi(Config::->getParamVal("MaxConnections").c_str()) );
+    ServerSocket->bind( std::atoi(serverConf->getParamVal("ServerPort").c_str()) );
+    ServerSocket->listen( std::atoi(serverConf->getParamVal("MaxConnections").c_str()) );
 
     while(1)  {
+        ThreadData* data = new ThreadData(ServerSocket->accept(), serverConf);
         PRThread* threadClient = NULL;
         threadClient = PR_CreateThread( 
                                          PR_USER_THREAD,
                                          processClient,
-                                         ServerSocket->accept(),
+                                         data,
                                          PR_PRIORITY_NORMAL,
                                          PR_LOCAL_THREAD,
                                          PR_JOINABLE_THREAD,
@@ -74,7 +82,6 @@ Server::start(bool deamon)
 
 
 
-static
 void
 Server::stop(void)
 {
@@ -90,7 +97,8 @@ void
 processClient(void* arg)
 {
     try  {
-        Client* client = new Client( static_cast<Socket*>(arg) );
+        ThreadData* data = static_cast<ThreadData*>(arg);
+        Client* client = new Client(data->first, data->second);
         client->handleRequest();
         
         if(client)  {

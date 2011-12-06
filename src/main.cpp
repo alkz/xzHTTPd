@@ -84,7 +84,7 @@ main(int argc, char** argv)
         xzHTTPd::Server::Server* server = NULL;
 
         try  {
-            xzHTTPd::Config::init(configFile.c_str());
+            serverConfig  = new xzHTTPd::Config::Config(configFile.c_str());
 
             if(printConf)  {
                 std::cout << "" << std::endl;

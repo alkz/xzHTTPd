@@ -30,12 +30,9 @@ namespace xzHTTPd  {
 namespace Config  {
 
 
-static
-bool
-(const char* name)
+Config::Config(const char* name)
 {
     fileName = name;
-    inited = false;
     if(! parse() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
     } 
@@ -43,20 +40,9 @@ bool
 
 
 
-static
 bool
 Config::parse(void)
 {
-    static const unsigned int NPAR = 5;
-    static const char* parameterName[NPAR] = 
-              { 
-                "ServerPort",
-                "MaxConnections",
-                "DirHtdocs",
-                "FileIndex",
-                "DirLog"
-              };   
-    
     std::ifstream f;     f.open(fileName, std::ios::ate);
     if(!f.is_open() || !f.tellg() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
@@ -110,16 +96,11 @@ Config::parse(void)
 
     f.close();
 
-    if(paramCount < NPAR)  {
-        return false;
-    } else  {
-        return true;
-    }
+    return ( (paramCount < NPAR) ? false : true );
 }
 
 
 
-static
 std::string
 Config::getParamVal(const std::string& key)  const
 {
@@ -128,7 +109,6 @@ Config::getParamVal(const std::string& key)  const
 
 
 
-static
 const char*
 Config::getFileName(void)  const
 {

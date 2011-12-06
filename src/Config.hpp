@@ -35,6 +35,17 @@ namespace xzHTTPd  {
 namespace Config  {
 
 
+static const unsigned int NPAR = 5;
+static const char* parameterName[NPAR] = 
+          { 
+            "ServerPort",
+            "MaxConnections",
+            "DirHtdocs",
+            "FileIndex",
+            "DirLog"
+          };   
+
+
 class Config
 {
     typedef   std::map<std::string, std::string>    Parameters;
@@ -42,15 +53,14 @@ class Config
 
     public:
 
-        static bool init(const char* );
+        Config(const char* );
 
-        static bool parse(void);
-        static std::string getParamVal (const std::string&) const;
-        static const char* getFileName (void) const;
+        bool parse(void);
+        std::string getParamVal (const std::string&) const;
+        const char* getFileName (void) const;
 
     private:
 
-        static bool inited;
         mutable Parameters params;
         const char* fileName;
         
