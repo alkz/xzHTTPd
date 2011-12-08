@@ -67,10 +67,6 @@ class Server
 
     private:
 
-        std::string getTimeStamp(void);
-
-    private:
-
         Config::Config* serverConf;
         Socket* ServerSocket;
         Log::Logger* logger;
