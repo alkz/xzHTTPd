@@ -67,7 +67,7 @@ Config::parse(void)
             n_tokens++;
 
             par.push_back(token);
-            token = strtok(NULL, " ");
+            token = std::strtok(NULL, " ");
         }
 
         if(n_tokens > 2)  {

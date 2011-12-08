@@ -113,6 +113,7 @@ Client::getFileName()
             if(f.is_open())  {
                 return ( fileName + s );
             }
+            s = std::strtok(NULL, ",");
         }
         
         delete [] tmp;
