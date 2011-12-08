@@ -16,10 +16,5 @@ Description:
     Config     - Parse and keep configuration parameters read from config file
     Exception  - Let's handle exceptions in a good way
     Client     - Each client connected
-
-    Coming soon...
-
-    Log 
-    ...
-
-
+    Log        - This check always what you do, stay alert
+    Utility    - Useful stuff 
