@@ -45,6 +45,8 @@ Client::~Client()
         delete clientSocket;
     }
     clientSocket = NULL;
+    serverConf = NULL;
+    logger = NULL;
 }
 
 
@@ -54,6 +56,7 @@ Client::handleRequest(void)
 {
     Socket& socket = *clientSocket;
     Log::Logger& log = *logger;
+
     socket >> request;
 
     log << "[" << Utility::getTimeStamp() << "]" << "\nRequest from: " << clientSocket->getAddress() << "\n\n" << request;

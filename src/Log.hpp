@@ -38,6 +38,7 @@ class Logger
     public:
         
         Logger(const std::string&);
+        ~Logger();
 
     public:
 

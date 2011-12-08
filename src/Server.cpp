@@ -34,6 +34,7 @@ Server::Server(Config::Config* conf)
 {
     serverConf = conf;
     ServerSocket = NULL;
+    logger = NULL;
 }
 
 
@@ -109,6 +110,15 @@ Server::stop(void)
         delete ServerSocket;
     }
     ServerSocket = NULL;
+
+    if(logger)  {
+        Log::Logger& log = *logger;
+        log << "[" << Utility::getTimeStamp() << "] - " << "Stop Server... bye!\n";
+
+        delete logger;
+    }
+
+    logger = NULL;
 }
 
 

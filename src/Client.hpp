@@ -51,8 +51,9 @@ class Client
 
     private:
 
-        Socket* clientSocket;
         std::string request;
+
+        Socket* clientSocket;
         Config::Config* serverConf;
         Log::Logger* logger;
 

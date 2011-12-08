@@ -60,6 +60,14 @@ Logger::Logger(const std::string& path)
 
 
 
+Logger::~Logger()
+{
+    logFile.flush();
+    logFile.close();
+}
+
+
+
 void
 Logger::write(const std::string& str)
 {
