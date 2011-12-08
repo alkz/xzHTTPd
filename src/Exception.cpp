@@ -97,7 +97,13 @@ Exception::Exception(unsigned int code)
             desc = "Failed to start xzHTTPd: config file not inited";
             break;
 
+        case LOG_OPEN_FILE:
+            desc = "Failed to start xzHTTPd: config file not inited";
+            break;
 
+        case LOG_DIR:
+            desc = "Failed to chdir to log directory, check permissions and if the dir exists.";
+            break;
 
         default:
             desc = "You did something wrong.";

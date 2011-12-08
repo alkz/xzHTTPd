@@ -30,10 +30,11 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-Client::Client(Socket* sock, Config::Config* conf)
+Client::Client(Socket* sock, Config::Config* conf, Log::Logger* log)
 {
     clientSocket = sock;
     serverConf = conf;
+    logger = log;
 }
 
 
@@ -52,7 +53,10 @@ void
 Client::handleRequest(void)
 {
     Socket& socket = *clientSocket;
+    Log::Logger& log = *logger;
     socket >> request;
+
+    log << "[" << Utility::getTimeStamp() << "]" << "\nRequest from: " << clientSocket->getAddress() << "\n\n" << request;
 
     // Bulding the response
     std::string headerResp;
@@ -73,12 +77,17 @@ Client::handleRequest(void)
 
         socket << headerResp << resp;
 
+        log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << headerResp << "\n\n";
+
     } else  {
-        std::string contenType = MimeType::getMimeType(fileName);
+        std::string contenType = Utility::getMimeType(fileName);
         headerResp = "HTTP/1.0 200 OK\r\nContent-Type: " + contenType;
         headerResp += "\r\nServer: xzHTTPd\r\n\r\n";
         socket << headerResp << fileContent;
+
+        log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << headerResp << fileName << "\n\n\n\n";
     }
+
 }
 
 
@@ -120,7 +129,7 @@ Client::getFileContent(const std::string& name)
 
     }  else  { 
         f.seekg(0, std::ios::end);
-        unsigned long int length = f.tellg(); 
+        long int length = f.tellg(); 
         f.seekg(0, std::ios::beg);
 
         char* buffer = new char[length];    // Fuck yea

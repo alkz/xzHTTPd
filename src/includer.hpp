@@ -25,7 +25,10 @@
 #include <string>
 #include <cstring>
 
+
 #include "Exception.hpp"
+#include "Log.hpp"
+#include "Utility.hpp"
 
 
 namespace xzHTTPd  {

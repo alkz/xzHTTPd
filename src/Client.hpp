@@ -27,7 +27,6 @@
 #include "includer.hpp"
 #include "Config.hpp"
 #include "Socket.hpp"
-#include "MimeType.hpp"
 
 
 namespace xzHTTPd  {
@@ -40,7 +39,7 @@ class Client
 {
     public:
 
-        Client(Socket*, Config::Config*);
+        Client(Socket*, Config::Config*, Log::Logger*);
         ~Client();
 
         void handleRequest(void);
@@ -55,6 +54,7 @@ class Client
         Socket* clientSocket;
         std::string request;
         Config::Config* serverConf;
+        Log::Logger* logger;
 
 };
 

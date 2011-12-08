@@ -17,20 +17,14 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SERVER_HPP__
-#define __XZHTTPD__SERVER_HPP__ 
+#ifndef __XZHTTPD__UTILITY_HPP__
+#define __XZHTTPD__UTILITY_HPP__ 
 
 
-#include <unistd.h>
-#include <cstdlib>
-#include <prthread.h>
-#include <prnetdb.h>
+#include <ctime>
 
 
 #include "includer.hpp"
-#include "Config.hpp"
-#include "Socket.hpp"
-#include "Client.hpp"
 
 
 namespace xzHTTPd  {
@@ -39,44 +33,36 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-// This will be passed to the client thread
-struct ThreadData  {
-
-    ThreadData(Socket* s, Config::Config* c, Log::Logger* l) : 
-         sock(s), conf(c), log(l)
-    {
-    }
-
-    Socket*         sock;
-    Config::Config* conf;
-    Log::Logger*    log;
-};
+struct MimeT {
+	const char *ext;
+	const char *contenType;
+}; 
 
 
-class Server
+static const struct MimeT Extensions [] =  {
+                               {"gif",   "image/gif" },  
+                               {"jpg",   "image/jpeg"}, 
+                               {"jpeg",  "image/jpeg"},
+                               {"png",   "image/png" },  
+                               {"zip",   "image/zip" },  
+                               {"gz",    "image/gz"  },  
+                               {"tar",   "image/tar" },  
+                               {"htm",   "text/html" },  
+                               {"html",  "text/html" },  
+                               {"css",   "text/css" },  
+
+                               {0,0} 
+                             };
+
+
+class Utility
 {
-
     public:
 
-        Server(Config::Config*);
+        static std::string getMimeType(const std::string&);
+        static std::string getTimeStamp(void);
 
-        void start(bool);
-        void stop (void);
-
-    private:
-
-        std::string getTimeStamp(void);
-
-    private:
-
-        Config::Config* serverConf;
-        Socket* ServerSocket;
-        Log::Logger* logger;
-        
 };
-
-
-void processClient(void*);
 
 
 }

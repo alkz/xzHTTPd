@@ -17,66 +17,42 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SERVER_HPP__
-#define __XZHTTPD__SERVER_HPP__ 
+#ifndef __XZHTTPD__LOG_HPP__
+#define __XZHTTPD__LOG_HPP__ 
 
 
-#include <unistd.h>
-#include <cstdlib>
-#include <prthread.h>
-#include <prnetdb.h>
+#include <fstream>
 
 
 #include "includer.hpp"
-#include "Config.hpp"
-#include "Socket.hpp"
-#include "Client.hpp"
 
 
 namespace xzHTTPd  {
 
 
-namespace Server  {
+namespace Log  {
 
 
-// This will be passed to the client thread
-struct ThreadData  {
-
-    ThreadData(Socket* s, Config::Config* c, Log::Logger* l) : 
-         sock(s), conf(c), log(l)
-    {
-    }
-
-    Socket*         sock;
-    Config::Config* conf;
-    Log::Logger*    log;
-};
-
-
-class Server
+class Logger
 {
+    public:
+        
+        Logger(const std::string&);
 
     public:
 
-        Server(Config::Config*);
-
-        void start(bool);
-        void stop (void);
+        Logger& operator<<(const std::string&);
 
     private:
 
-        std::string getTimeStamp(void);
+        void write(const std::string&);
 
     private:
 
-        Config::Config* serverConf;
-        Socket* ServerSocket;
-        Log::Logger* logger;
-        
+        std::string nameLogFile;
+        std::ofstream logFile;
+
 };
-
-
-void processClient(void*);
 
 
 }

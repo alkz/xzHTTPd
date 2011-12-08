@@ -17,20 +17,11 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SERVER_HPP__
-#define __XZHTTPD__SERVER_HPP__ 
+#ifndef __XZHTTPD__UTILITY_CPP__
+#define __XZHTTPD__UTILITY_CPP__ 
 
 
-#include <unistd.h>
-#include <cstdlib>
-#include <prthread.h>
-#include <prnetdb.h>
-
-
-#include "includer.hpp"
-#include "Config.hpp"
-#include "Socket.hpp"
-#include "Client.hpp"
+#include "Utility.hpp"
 
 
 namespace xzHTTPd  {
@@ -39,44 +30,39 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-// This will be passed to the client thread
-struct ThreadData  {
+std::string
+Utility::getMimeType(const std::string& ext)
+{
+    std::size_t beginExt = ext.find_first_of(".", 1);
+    std::string type = ext.substr(
+                                  beginExt+1, 
+                                  ext.find_first_of(
+                                                      beginExt, 
+                                                      ext.find_first_of(" ", beginExt) - beginExt
+                                                   )
+                               );
 
-    ThreadData(Socket* s, Config::Config* c, Log::Logger* l) : 
-         sock(s), conf(c), log(l)
-    {
+    for(int i = 0; Extensions[i].ext != 0; i++)  {
+        if( ! std::strcmp(Extensions[i].ext, type.c_str()) )  {
+            type = Extensions[i].contenType;
+            break;
+        }
     }
 
-    Socket*         sock;
-    Config::Config* conf;
-    Log::Logger*    log;
-};
+    return type;
+}
 
 
-class Server
+
+std::string
+Utility::getTimeStamp(void)
 {
+    std::time_t result = std::time(NULL);
+    char* t = std::asctime(std::localtime(&result));
+    std::string timestamp(t, std::strlen(t) - 1);
 
-    public:
-
-        Server(Config::Config*);
-
-        void start(bool);
-        void stop (void);
-
-    private:
-
-        std::string getTimeStamp(void);
-
-    private:
-
-        Config::Config* serverConf;
-        Socket* ServerSocket;
-        Log::Logger* logger;
-        
-};
-
-
-void processClient(void*);
+    return timestamp;
+}
 
 
 }

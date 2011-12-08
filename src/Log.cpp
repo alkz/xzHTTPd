@@ -17,66 +17,69 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SERVER_HPP__
-#define __XZHTTPD__SERVER_HPP__ 
+#ifndef __XZHTTPD__LOG_CPP__
+#define __XZHTTPD__LOG_CPP__ 
 
 
-#include <unistd.h>
-#include <cstdlib>
-#include <prthread.h>
-#include <prnetdb.h>
-
-
-#include "includer.hpp"
-#include "Config.hpp"
-#include "Socket.hpp"
-#include "Client.hpp"
+#include "Log.hpp"
 
 
 namespace xzHTTPd  {
 
 
-namespace Server  {
+namespace Log  {
 
 
-// This will be passed to the client thread
-struct ThreadData  {
+Logger::Logger(const std::string& path)
+{
+    std::string back = "log.";
+    std::string lastLog;
+    bool full = true;
+    std::string tmpFile;
 
-    ThreadData(Socket* s, Config::Config* c, Log::Logger* l) : 
-         sock(s), conf(c), log(l)
-    {
+    std::cout << "nig";
+    for(char i = '0'; i <= '9'; i++)  {
+        lastLog = back + i;
+        std::ifstream f;    
+        tmpFile = path + "/" + lastLog;
+        f.open(tmpFile.c_str());
+        if(! f.is_open())  {
+            full = false;
+            break;
+        }
     }
 
-    Socket*         sock;
-    Config::Config* conf;
-    Log::Logger*    log;
-};
+    nameLogFile = ( (!full) ? tmpFile : ( path + "/log.0" ) );
+    logFile.open(nameLogFile.c_str(), std::ios::binary);
+
+    if(! logFile.is_open() )  {
+        throw ( Exception::Exception(Exception::Exception::LOG_OPEN_FILE) );
+    }
+
+}
 
 
-class Server
+
+void
+Logger::write(const std::string& str)
 {
+    logFile.write(str.c_str(), str.length());
+    logFile.flush();
 
-    public:
-
-        Server(Config::Config*);
-
-        void start(bool);
-        void stop (void);
-
-    private:
-
-        std::string getTimeStamp(void);
-
-    private:
-
-        Config::Config* serverConf;
-        Socket* ServerSocket;
-        Log::Logger* logger;
-        
-};
+    if(logFile.bad())  {
+        throw ( Exception::Exception(Exception::Exception::LOG_WRITE) );
+    }
+}
 
 
-void processClient(void*);
+
+Logger&
+Logger::operator <<(const std::string& str)
+{
+    this->write(str);
+
+    return *this;
+}
 
 
 }
