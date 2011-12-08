@@ -5,9 +5,10 @@ Compiled with:
     g++-4.5.3
     nspr-4.8.9
 
-To compile:
+To install:
 
-    g++ `nspr-config --cflags --libs` -o xzHTTPd src/*.cpp src/*.hpp
+    $ su - root
+    # ./install.sh
 
 Description:
 
