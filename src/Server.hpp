@@ -59,6 +59,7 @@ class Server
     public:
 
         Server(Config::Config*);
+        ~Server();
 
         void start(bool);
         void stop (void);

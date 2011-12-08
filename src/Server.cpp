@@ -39,6 +39,25 @@ Server::Server(Config::Config* conf)
 
 
 
+Server::~Server()
+{
+    if(ServerSocket)  {
+        delete ServerSocket;
+    }
+    ServerSocket = NULL;
+
+    if(logger)  {
+        Log::Logger& log = *logger;
+        log << "[" << Utility::getTimeStamp() << "] - " << "Stop Server... bye!\n";
+
+        delete logger;
+    }
+
+    logger = NULL;
+}
+
+
+
 void
 Server::start(bool deamon)
 {
@@ -99,26 +118,6 @@ Server::start(bool deamon)
        
     }
 
-}
-
-
-
-void
-Server::stop(void)
-{
-    if(ServerSocket)  {
-        delete ServerSocket;
-    }
-    ServerSocket = NULL;
-
-    if(logger)  {
-        Log::Logger& log = *logger;
-        log << "[" << Utility::getTimeStamp() << "] - " << "Stop Server... bye!\n";
-
-        delete logger;
-    }
-
-    logger = NULL;
 }
 
 
