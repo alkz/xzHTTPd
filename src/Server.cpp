@@ -66,7 +66,11 @@ Server::start(bool deamon)
             std::exit(0);
         } 
     }
-    
+
+    if( std::strcmp(std::getenv("USER"), "xzhttpd") )  {
+        throw ( Exception::Exception(Exception::Exception::SERVER_WRONG_USER) );
+    }
+
     if ( chdir( serverConf->getParamVal("DirLog").c_str() ) == -1)  {
         throw ( Exception::Exception(Exception::Exception::LOG_DIR) );
     }

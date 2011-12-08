@@ -37,7 +37,6 @@ Logger::Logger(const std::string& path)
     bool full = true;
     std::string tmpFile;
 
-    std::cout << "nig";
     for(char i = '0'; i <= '9'; i++)  {
         lastLog = back + i;
         std::ifstream f;    

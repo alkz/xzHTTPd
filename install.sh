@@ -1,4 +1,5 @@
 
+echo
 echo "Compilig..."
 echo "g++ \`nspr-config --cflags --libs\` -g -o /usr/bin/xzHTTPd ./src/*.cpp ./src/*.hpp"
 g++ `nspr-config --cflags --libs` -g -o /usr/bin/xzHTTPd ./src/*.cpp ./src/*.hpp
@@ -11,16 +12,18 @@ useradd -m xzhttpd
 mkdir /home/xzhttpd/htdocs
 mkdir /home/xzhttpd/logs
 mkdir /etc/xzHTTPd/
-cp    ./etc/xzHTTPd.conf /etc/xzHTTPd
+cp    ./etc/xzHTTPd.conf    /etc/xzHTTPd
+cp    ./etc/index.html      /home/xzhttpd/htdocs
+cp    ./etc/nishinoav.png   /home/xzhttpd/htdocs
 
 echo
 echo "Done!"
 echo
 echo "Setting permissions..."
 
-chown -R xzhttpd:xzhttpd /etc/xzHTTPd
-chown xzhttpd:xzhttpd /usr/bin/xzHTTPd
-chown -R xzhttpd:xzhttpd /home/xzhttpd
+chown -R xzhttpd:xzhttpd   /etc/xzHTTPd
+chown    xzhttpd:xzhttpd   /usr/bin/xzHTTPd
+chown -R xzhttpd:xzhttpd   /home/xzhttpd
 
 echo
 echo "--------------------------------------------------------"

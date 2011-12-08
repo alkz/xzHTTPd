@@ -93,12 +93,12 @@ Exception::Exception(unsigned int code)
             desc = "Failed to chdir to htdocs directory, check permissions and if the dir exists.";
             break;
 
-        case SERVER_CONFIG_NOT_INITED:
-            desc = "Failed to start xzHTTPd: config file not inited";
+        case SERVER_WRONG_USER:
+            desc = "Failed to start xzHTTPd, you should start it from xzhttpd user.";
             break;
 
         case LOG_OPEN_FILE:
-            desc = "Failed to start xzHTTPd: config file not inited";
+            desc = "Failed to open log file.";
             break;
 
         case LOG_DIR:

@@ -51,7 +51,7 @@ class Exception : public std::exception
         static const unsigned int SERVER_CREATE_THREAD       = 3002;
         static const unsigned int SERVER_JOIN_THREAD         = 3003;
         static const unsigned int SERVER_CHDIR               = 3004;
-        static const unsigned int SERVER_CONFIG_NOT_INITED   = 3005;
+        static const unsigned int SERVER_WRONG_USER          = 3005;
 
         static const unsigned int LOG_OPEN_FILE = 4001;
         static const unsigned int LOG_WRITE     = 4002;
