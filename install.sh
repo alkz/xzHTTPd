@@ -8,6 +8,7 @@ echo
 echo "Creating user and directories..."
 
 useradd -m xzhttpd
+passwd  -d xzhttpd
 
 mkdir /home/xzhttpd/htdocs
 mkdir /home/xzhttpd/logs
