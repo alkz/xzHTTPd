@@ -59,7 +59,7 @@ Client::handleRequest(void)
 
     socket >> request;
 
-    log << "[" << Utility::getTimeStamp() << "]" << "\nRequest from: " << clientSocket->getAddress() << "\n\n" << request;
+    log << "[" << Utility::getTimeStamp() << "]" << "\nRequest from: " << clientSocket->getAddress() << "\n\n" << request << "\n\n";
 
     // Bulding the response
     std::string headerResp;
