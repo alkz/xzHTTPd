@@ -1,8 +1,8 @@
 
 echo
 echo "Compilig..."
-echo "g++ \`nspr-config --cflags --libs\` -g -o /usr/bin/xzHTTPd ./src/*.cpp ./src/*.hpp"
-g++ `nspr-config --cflags --libs` -g -o /usr/bin/xzHTTPd ./src/*.cpp ./src/*.hpp
+echo "g++ \`nspr-config --cflags --libs\` -g -I include/ src/* -o /usr/bin/xzHTTPd"
+g++ `nspr-config --cflags --libs` -g -I include/ src/* -o /usr/bin/xzHTTPd
 echo "Compiled!"
 echo
 echo "Creating user and directories..."
