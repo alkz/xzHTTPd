@@ -83,6 +83,7 @@ Server::start(bool deamon)
     const char* htdocsDir = serverConf->getParamVal("DirHtdocs").c_str();
 
     if ( chdir( htdocsDir ) == -1)  {
+        log << "[" << Utility::getTimeStamp() << "] - " << "failed to chdir to htdocs: " << htdocsDir << "\n";
         throw ( Exception::Exception(Exception::Exception::SERVER_CHDIR) );
     }
 
@@ -113,10 +114,12 @@ Server::start(bool deamon)
                                       );
 
         if(! threadClient )  {
+            log << "[" << Utility::getTimeStamp() << "] - Failed to create thread client.\n";
             throw ( Exception::Exception(Exception::Exception::SERVER_CREATE_THREAD) );
         }
         
         if (PR_JoinThread(threadClient) == PR_FAILURE)  {
+            log << "[" << Utility::getTimeStamp() << "] - Failed to join thread client.\n";
             throw ( Exception::Exception(Exception::Exception::SERVER_JOIN_THREAD) );
         }
        

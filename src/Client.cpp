@@ -101,7 +101,7 @@ Client::getFileName()
     std::size_t begin = request.find_first_of("/");
     std::string fileName = request.substr(
                                            begin, 
-                                           request.find_first_of(" ", begin) - begin
+                                           request.find_first_of(" ?", begin) - begin
                                          ).insert(0, ".");
 
     if(fileName.length() == 2)  {    // Faggot user didn't give a page name (length == "./")
