@@ -12,10 +12,11 @@ To install:
 
 Description:
 
-    Server     - This is the main class, it provides to receive requests and create/join threads
-    Socket     - Just a beautiful socket management class :333
-    Config     - Parse and keep configuration parameters read from config file
-    Exception  - Let's handle exceptions in a good way
-    Client     - Each client connected
-    Log        - This checks always what you do, stay alert
-    Utility    - Useful stuff 
+    Server          - This is the main class, it provides to receive requests and create/join threads
+    Socket          - Just a beautiful socket management class :333
+    Config          - Parse and keep configuration parameters read from config file
+    Exception       - Let's handle exceptions in a good way
+    Client          - Each client connected
+    Log             - This checks always what you do, stay alert
+    Utility         - Useful stuff 
+    HTTPResponse    - It handles HTTP response to client
