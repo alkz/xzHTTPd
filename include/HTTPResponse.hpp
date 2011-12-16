@@ -22,6 +22,8 @@
 
 
 #include <map>
+#include <sstream>
+#include <vector>
 
 
 #include "includer.hpp"
@@ -35,23 +37,42 @@ namespace Server  {
 
 class HTTPResponse
 {
-    typedef    std::map< std::string, std::string >    HTTPHeader;
+    typedef    std::map< std::string, std::string >     HTTPHeader;
+    typedef    std::pair< std::string, std::string >    HTTPHeaderField;
+
+    typedef    std::map< unsigned int, std::string >    StatusCodes;
 
     public:
 
-        HTTPResponse(const std::string&);
-        ~HTTPResponse();
+        HTTPResponse();
 
-        setHeader (const std::string&, const std::string&);
-        setContent(const std::string&);
+        void setHeader  (const std::string&, const std::string&);
+        void setStatus  (unsigned int);
+        void setHTTPVersion (const std::string&);
+        void setContent (const std::string&);
+        void setMethod(const std::string&);
 
-        std::string getHeader (void) const;
+        std::string getHeader (void);
+        std::string getHeaderFiled(const std::string&) const;
         std::string getContent(void) const;
+        unsigned int getStatus(void) const;
+        std::string getVersion(void) const;
+        std::string getMethod(void) const;
+        std::string getHeaderField(const std::string&);
+
+    private:
+
+        void initStatusCodes(void);
         
     private:
 
         HTTPHeader header;
         std::string content;
+
+        StatusCodes codes;
+        unsigned int currentStatus;
+        std::string HTTPVersion;
+        std::string method;
 
 };
 

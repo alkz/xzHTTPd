@@ -49,7 +49,7 @@ Config::parse(void)
     }
 
     char buffer[400];
-    int paramCount = 0;
+    unsigned int paramCount = 0;
 
     f.seekg(0);
     do  {
@@ -76,7 +76,7 @@ Config::parse(void)
         } else  {
             bool found = false;
 
-            for(int i = 0; i < NPAR; i++)  {
+            for(unsigned int i = 0; i < NPAR; i++)  {
                 if( (std::strcmp(parameterName[i], par[0])) == 0)  {
                     paramCount++;
                     found = true;

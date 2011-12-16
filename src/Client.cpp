@@ -62,33 +62,39 @@ Client::handleRequest(void)
     log << "[" << Utility::getTimeStamp() << "]" << "\nRequest from: " << clientSocket->getAddress() << "\n\n" << request << "\n\n";
 
     // Bulding the response
-    std::string headerResp;
-
     std::string fileName = getFileName();
     std::string fileContent = getFileContent(fileName);
 
-    if(! fileContent.length())  {
-        headerResp = "HTTP/1.0 404 Not Found\r\nConnection: close\r\nContent-Type: text/html"
-                     "\r\nServer: xzHTTPd\r\n\r\n";
+    HTTPResponse *response = new HTTPResponse();
 
-        std::string resp;
-        resp       = "<html><head><title>404 - Gaypride</title></head>"
+    if(! fileContent.length())  {
+        response->setHeader("Connection",    "close");
+        response->setHeader("Content-Type",  "text/html");
+        response->setHeader("Server",        "xzHTTPd");
+        response->setStatus(404);
+
+        std::string content;
+        content   =  "<html><head><title>404 - Gaypride</title></head>"
                      "<body><h2>404 - Page not found gay</h2><hr />"
                      "<i><h5>xzHTTPd v";
-        resp      += VERSION;
-        resp      += " - 2011</h5></i></body></html>";
+        content  +=  VERSION;
+        content  +=  " - 2011</h5></i></body></html>";
+        response->setContent(content);
 
-        socket << headerResp << resp;
-
-        log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << headerResp << "\n\n";
+        socket << response->getHeader() << response->getContent();
+        log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << response->getHeader() << "\n\n";
 
     } else  {
-        std::string contenType = Utility::getMimeType(fileName);
-        headerResp = "HTTP/1.0 200 OK\r\nContent-Type: " + contenType;
-        headerResp += "\r\nServer: xzHTTPd\r\n\r\n";
-        socket << headerResp << fileContent;
 
-        log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << headerResp << fileName << "\n\n\n\n";
+        response->setHeader("Content-Type",   Utility::getMimeType(fileName));
+        response->setHeader("Server",         "xzHTTPd");
+        response->setMethod(request.substr( 0, request.find_first_of(" ") ));
+        response->setStatus(200);
+
+        response->setContent(fileContent);
+
+        socket << response->getHeader() << response->getContent();
+        log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << response->getHeader() << fileName << "\n\n\n\n";
     }
 
 }
@@ -117,9 +123,9 @@ Client::getFileName()
         }
         
         delete [] tmp;
-    } else  {
-        return fileName;
     }
+
+    return fileName;
 }
 
 

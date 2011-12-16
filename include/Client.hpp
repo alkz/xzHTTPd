@@ -27,6 +27,7 @@
 #include "includer.hpp"
 #include "Config.hpp"
 #include "Socket.hpp"
+#include "HTTPResponse.hpp"
 
 
 namespace xzHTTPd  {

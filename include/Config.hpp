@@ -36,7 +36,7 @@ namespace Config  {
 
 
 static const unsigned int NPAR = 5;
-static const char* parameterName[NPAR] = 
+static const char parameterName[][15] = 
           { 
             "ServerPort",
             "MaxConnections",

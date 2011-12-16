@@ -33,7 +33,7 @@
 
 namespace xzHTTPd  {
 
-static const char* VERSION = "0.1";
+static const char VERSION[] = "0.1";
 
 }
 
