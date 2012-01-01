@@ -89,12 +89,13 @@ main(int argc, char** argv)
             if(printConf)  {
                 std::cout << "" << std::endl;
                 std::cout << "xzHTTPd configuration is 0 KILL!:" << std::endl;
-                std::cout << "   ServerPort:\t\t"     << serverConfig->getParamVal("ServerPort") << std::endl;
-                std::cout << "   MaxConnections:\t"   << serverConfig->getParamVal("MaxConnections") << std::endl;
-                std::cout << "   DirHtdocs:\t\t"      << serverConfig->getParamVal("DirHtdocs") << std::endl;
-                std::cout << "   FileIndex:\t\t"      << serverConfig->getParamVal("FileIndex") << std::endl;
-                std::cout << "   DirLog:\t\t"         << serverConfig->getParamVal("DirLog") << std::endl;
-                std::cout << "" << std::endl;
+                std::cout << "   ServerPort:\t\t"     << serverConfig->getParamVal("ServerPort")      << std::endl;
+                std::cout << "   MaxConnections:\t"   << serverConfig->getParamVal("MaxConnections")  << std::endl;
+                std::cout << "   DirHtdocs:\t\t"      << serverConfig->getParamVal("DirHtdocs")       << std::endl;
+                std::cout << "   FileIndex:\t\t"      << serverConfig->getParamVal("FileIndex")       << std::endl;
+                std::cout << "   DirLog:\t\t"         << serverConfig->getParamVal("DirLog")          << std::endl;
+                std::cout << std::endl << "Extensions Handlers: "                                     << std::endl;
+                std::cout << "   php:\t\t"            << serverConfig->getExtHandler("php")           << std::endl;
             }
 
             server = new xzHTTPd::Server::Server(serverConfig);

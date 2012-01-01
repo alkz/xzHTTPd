@@ -48,7 +48,7 @@ Config::parse(void)
         throw( Exception::Exception(Exception::Exception::CONFIG_OPEN_FILE) );
     }
 
-    char buffer[400];
+    char buffer[1024];
     unsigned int paramCount = 0;
 
     f.seekg(0);
@@ -59,37 +59,12 @@ Config::parse(void)
             continue;
         }
 
-        char* token = std::strtok(buffer, " ");
-        unsigned int n_tokens = 0;
-        std::vector<const char*> par;
-
-        while(token && (n_tokens < 3))  {
-            n_tokens++;
-
-            par.push_back(token);
-            token = std::strtok(NULL, " ");
-        }
-
-        if(n_tokens > 2)  {
+        if(! explodeRow(buffer))  {
             return false;
-
         } else  {
-            bool found = false;
-
-            for(unsigned int i = 0; i < NPAR; i++)  {
-                if( (std::strcmp(parameterName[i], par[0])) == 0)  {
-                    paramCount++;
-                    found = true;
-                    break;
-                }
-            }
-
-            if(!found)  {
-                return false;
-            } else  {
-                params.insert( Parameter(std::string(par[0]), std::string(par[1])) );
-            }
+            paramCount++;
         }
+
 
         f.getline(buffer, sizeof(buffer));
     } while( !f.eof() );
@@ -101,10 +76,93 @@ Config::parse(void)
 
 
 
+bool
+Config::explodeRow(char* row)
+{        
+    enum rowType { PARAMETER, MODULE, OTHER };
+
+    unsigned int n_token = 0;
+    char* par[2];
+
+    rowType type = OTHER;
+
+    char* token = std::strtok(row, " ");
+    while(token && (n_token < 2))  {
+
+        if(! std::strcmp(token, "Parameter"))  {
+            type = PARAMETER; 
+
+        } else if(! std::strcmp(token, "Extension"))  {
+            type = MODULE; 
+
+        } else  {
+            
+            switch(type)  {
+
+                case PARAMETER:
+                    par[n_token] = new char[std::strlen(token)+1];
+                    std::strcpy(par[n_token], token);
+                    n_token++;
+
+                    if(n_token == 2)  {
+                        bool found = false;
+                        for(unsigned int i = 0; i < NPAR; i++)  {
+                            if(! std::strcmp(parameterName[i], par[0]))  {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if(!found)  {
+                            return false;
+                        } else  {
+                            params.insert( Parameter(std::string(par[0]), std::string(par[1])) );
+                            
+                            type = OTHER;
+                        }
+                    }
+
+                    break;
+
+                case MODULE:
+                    par[n_token] = new char[std::strlen(token)+1];
+                    std::strcpy(par[n_token], token);
+                    n_token++;
+
+                    if(n_token == 2)  {
+                        modules.insert( Module(std::string(par[0]), std::string(par[1])) );
+
+                        type = OTHER;
+                    }
+
+                    break;
+
+                default:   // WUT?
+                    return false;
+                
+            }
+        }
+        
+        token = std::strtok(NULL, " ");
+    }
+
+    return ( (n_token == 2) ? true : false );
+}
+
+
+
 std::string
 Config::getParamVal(const std::string& key)  const
 {
     return (params[key]);
+}
+
+
+
+std::string
+Config::getExtHandler(const std::string& key)  const
+{
+    return (modules[key]);
 }
 
 

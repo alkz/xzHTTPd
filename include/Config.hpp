@@ -48,20 +48,29 @@ static const char parameterName[][15] =
 
 class Config
 {
-    typedef   std::map<std::string, std::string>    Parameters;
+    typedef   std::map <std::string, std::string>   Parameters;
+    typedef   std::map <std::string, std::string>   Modules;
+
     typedef   std::pair<std::string, std::string>   Parameter;
+    typedef   std::pair<std::string, std::string>   Module;
 
     public:
 
         Config(const char* );
 
+        std::string getParamVal   (const std::string&) const;
+        std::string getExtHandler (const std::string&) const;
+        const char* getFileName   (void) const;
+
+    private:
+        
         bool parse(void);
-        std::string getParamVal (const std::string&) const;
-        const char* getFileName (void) const;
+        bool explodeRow(char*);
 
     private:
 
         mutable Parameters params;
+        mutable Modules modules;
         const char* fileName;
         
 };
