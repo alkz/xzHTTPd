@@ -12,7 +12,7 @@ LIB=$(NSPR_LIBS)
 all: xzHTTPd
 
 xzHTTPd: obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o
-	$(CC) $(CFLAGS) $(LIB) obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o  -o  xzHTTPd
+	$(CC)  $(CFLAGS) $(LIB) obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o  -o  xzHTTPd
 
 
 obj/main.o:    src/main.cpp
