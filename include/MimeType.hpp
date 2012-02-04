@@ -17,8 +17,8 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CONFIG_HPP__
-#define __XZHTTPD__CONFIG_HPP__ 
+#ifndef __XZHTTPD__MIMETYPE_HPP__
+#define __XZHTTPD__MIMETYPE_HPP__ 
 
 
 #include <fstream>
@@ -26,54 +26,32 @@
 
 
 #include "includer.hpp"
-#include "MimeType.hpp"
 
 
 namespace xzHTTPd  {
 
 
-namespace Config  {
+namespace Server  {
 
 
-static const unsigned int NPAR = 6;
-static const char parameterName[][15] = 
-          { 
-            "ServerPort",
-            "MaxConnections",
-            "DirHtdocs",
-            "FileIndex",
-            "DirLog",
-            "MimeDir"
-          };   
+namespace MimeType  {
 
 
-class Config
-{
-    typedef   std::map <std::string, std::string>   Parameters;
-    typedef   std::map <std::string, std::string>   Modules;
+typedef   std::map<std::string, std::string>     MimeTable;
+typedef   std::pair<std::string, std::string>    MimePair;
 
-    typedef   std::pair<std::string, std::string>   Parameter;
-    typedef   std::pair<std::string, std::string>   Module;
+std::string getMimeType(const std::string&);
 
-    public:
+void initMimes(void);
+bool parseMimeFile(void);
 
-        Config(const char* );
+static std::string mimePath; 
 
-        std::string getParamVal   (const std::string&) const;
-        std::string getExtHandler (const std::string&) const;
-        const char* getFileName   (void) const;
+static MimeTable mimes;
+static bool inited;
 
-    private:
-        
-        bool parse(void);
-        bool explodeRow(char*);
 
-    private:
-
-        mutable Parameters params;
-        mutable Modules modules;
-        const char* fileName;
-};
+}
 
 
 }

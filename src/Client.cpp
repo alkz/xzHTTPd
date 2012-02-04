@@ -86,7 +86,7 @@ Client::handleRequest(void)
 
     } else  {
 
-        response->setHeader("Content-Type",   Utility::getMimeType(fileName));
+        response->setHeader("Content-Type",   MimeType::getMimeType(fileName));
         response->setHeader("Server",         "xzHTTPd");
         response->setMethod(request.substr( 0, request.find_first_of(" ") ));
         response->setStatus(200);

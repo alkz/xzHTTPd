@@ -94,6 +94,8 @@ main(int argc, char** argv)
                 std::cout << "   DirHtdocs:\t\t"      << serverConfig->getParamVal("DirHtdocs")       << std::endl;
                 std::cout << "   FileIndex:\t\t"      << serverConfig->getParamVal("FileIndex")       << std::endl;
                 std::cout << "   DirLog:\t\t"         << serverConfig->getParamVal("DirLog")          << std::endl;
+                std::cout << "   MimeDir:\t\t"        << serverConfig->getParamVal("MimeDir")         << std::endl;
+
                 std::cout << std::endl << "Extensions Handlers: "                                     << std::endl;
                 std::cout << "   php:\t\t"            << serverConfig->getExtHandler("php")           << std::endl;
             }

@@ -31,30 +31,6 @@ namespace Server  {
 
 
 std::string
-Utility::getMimeType(const std::string& ext)
-{
-    std::size_t beginExt = ext.find_first_of(".", 1);
-    std::string type = ext.substr(
-                                  beginExt+1, 
-                                  ext.find_first_of(
-                                                      beginExt, 
-                                                      ext.find_first_of(" ", beginExt) - beginExt
-                                                   )
-                               );
-
-    for(int i = 0; Extensions[i].ext != 0; i++)  {
-        if( ! std::strcmp(Extensions[i].ext, type.c_str()) )  {
-            type = Extensions[i].contenType;
-            break;
-        }
-    }
-
-    return type;
-}
-
-
-
-std::string
 Utility::getTimeStamp(void)
 {
     std::time_t result = std::time(NULL);

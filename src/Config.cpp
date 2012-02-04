@@ -35,7 +35,9 @@ Config::Config(const char* name)
     fileName = name;
     if(! parse() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
-    } 
+    } else  {
+        xzHTTPd::Server::MimeType::mimePath = params["MimeDir"];
+    }
 }
 
 

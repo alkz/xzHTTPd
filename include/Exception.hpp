@@ -57,6 +57,8 @@ class Exception : public std::exception
         static const unsigned int LOG_WRITE     = 4002;
         static const unsigned int LOG_DIR       = 4003;
 
+        static const unsigned int MIME_OPEN_FILE   = 5001;
+
     public:
 
         Exception(unsigned int code =0);

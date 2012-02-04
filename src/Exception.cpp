@@ -105,6 +105,10 @@ Exception::Exception(unsigned int code)
             desc = "Failed to chdir to log directory, check permissions and if the dir exists.";
             break;
 
+        case MIME_OPEN_FILE:
+            desc = "Could not open MimeTypes file.";
+            break;
+
         default:
             desc = "You did something wrong.";
     }

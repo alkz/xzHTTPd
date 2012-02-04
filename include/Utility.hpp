@@ -33,33 +33,10 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-struct MimeT {
-	const char *ext;
-	const char *contenType;
-}; 
-
-
-static const struct MimeT Extensions [] =  {
-                               {"gif",   "image/gif" },  
-                               {"jpg",   "image/jpeg"}, 
-                               {"jpeg",  "image/jpeg"},
-                               {"png",   "image/png" },  
-                               {"zip",   "image/zip" },  
-                               {"gz",    "image/gz"  },  
-                               {"tar",   "image/tar" },  
-                               {"htm",   "text/html" },  
-                               {"html",  "text/html" },  
-                               {"css",   "text/css" },  
-
-                               {0,0} 
-                             };
-
-
 class Utility
 {
     public:
 
-        static std::string getMimeType(const std::string&);
         static std::string getTimeStamp(void);
 
 };
