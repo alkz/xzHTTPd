@@ -35,19 +35,6 @@ Config::Config(const char* name)
     fileName = name;
     if(! parse() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
-    } else  {
-        // Let's add default mimes
-
-        mimes.insert( MimePair( "gif",   "image/gif"  ) );
-        mimes.insert( MimePair( "jpg",   "image/jpeg" ) );
-        mimes.insert( MimePair( "jpeg",  "image/jpeg" ) );
-        mimes.insert( MimePair( "png",   "image/png"  ) );
-        mimes.insert( MimePair( "zip",   "image/zip"  ) );
-        mimes.insert( MimePair( "gz",    "image/gz"   ) );
-        mimes.insert( MimePair( "tar",   "image/tar"  ) );
-        mimes.insert( MimePair( "htm",   "text/html"  ) );
-        mimes.insert( MimePair( "html",  "text/html"  ) );
-        mimes.insert( MimePair( "css",   "text/css"   ) );
     }
 }
 

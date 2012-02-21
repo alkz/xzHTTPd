@@ -26,7 +26,6 @@
 
 
 #include "includer.hpp"
-#include "MimeType.hpp"
 
 
 namespace xzHTTPd  {
