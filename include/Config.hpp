@@ -55,12 +55,16 @@ class Config
     typedef   std::pair<std::string, std::string>   Parameter;
     typedef   std::pair<std::string, std::string>   Module;
 
+    typedef   std::map<std::string, std::string>     MimeTable;
+    typedef   std::pair<std::string, std::string>    MimePair;
+
     public:
 
         Config(const char* );
 
         std::string getParamVal   (const std::string&) const;
         std::string getExtHandler (const std::string&) const;
+        std::string getMimeType   (const std::string&) const;
         const char* getFileName   (void) const;
 
     private:
@@ -72,6 +76,7 @@ class Config
 
         mutable Parameters params;
         mutable Modules modules;
+        mutable MimeTable mimes;
         const char* fileName;
 };
 

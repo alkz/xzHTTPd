@@ -11,8 +11,8 @@ LIB=$(NSPR_LIBS)
 
 all: xzHTTPd
 
-xzHTTPd: obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o obj/MimeType.o
-	$(CC)  $(CFLAGS) $(LIB) obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o obj/MimeType.o  -o  xzHTTPd
+xzHTTPd: obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o
+	$(CC)  $(CFLAGS) $(LIB) obj/main.o obj/Server.o obj/Socket.o obj/Utility.o obj/Log.o obj/Exception.o obj/Config.o obj/HTTPResponse.o obj/Client.o  -o  xzHTTPd
 
 
 obj/main.o:    src/main.cpp
@@ -42,8 +42,6 @@ obj/HTTPResponse.o: src/HTTPResponse.cpp include/HTTPResponse.hpp
 obj/Client.o:  src/Client.cpp include/Client.hpp
 	$(CC)  $(CFLAGS)  $(INCLUDES) -c   src/Client.cpp            -o  obj/Client.o
 
-obj/MimeType.o:  src/MimeType.cpp include/MimeType.hpp
-	$(CC)  $(CFLAGS)  $(INCLUDES) -c   src/MimeType.cpp          -o  obj/MimeType.o
 
 clean:
 	rm -rf obj/*.o 

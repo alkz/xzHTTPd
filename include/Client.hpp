@@ -28,7 +28,6 @@
 #include "Config.hpp"
 #include "Socket.hpp"
 #include "HTTPResponse.hpp"
-#include "MimeType.hpp"
 
 
 namespace xzHTTPd  {

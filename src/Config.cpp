@@ -36,7 +36,18 @@ Config::Config(const char* name)
     if(! parse() )  {
         throw( Exception::Exception(Exception::Exception::CONFIG_PARSE_FILE) );
     } else  {
-        xzHTTPd::Server::MimeType::mimePath = params["MimeDir"];
+        // Let's add default mimes
+
+        mimes.insert( MimePair( "gif",   "image/gif"  ) );
+        mimes.insert( MimePair( "jpg",   "image/jpeg" ) );
+        mimes.insert( MimePair( "jpeg",  "image/jpeg" ) );
+        mimes.insert( MimePair( "png",   "image/png"  ) );
+        mimes.insert( MimePair( "zip",   "image/zip"  ) );
+        mimes.insert( MimePair( "gz",    "image/gz"   ) );
+        mimes.insert( MimePair( "tar",   "image/tar"  ) );
+        mimes.insert( MimePair( "htm",   "text/html"  ) );
+        mimes.insert( MimePair( "html",  "text/html"  ) );
+        mimes.insert( MimePair( "css",   "text/css"   ) );
     }
 }
 
@@ -81,7 +92,7 @@ Config::parse(void)
 bool
 Config::explodeRow(char* row)
 {        
-    enum rowType { PARAMETER, MODULE, OTHER };
+    enum rowType { PARAMETER, MODULE, MIME, OTHER };
 
     unsigned int n_token = 0;
     char* par[2];
@@ -96,6 +107,9 @@ Config::explodeRow(char* row)
 
         } else if(! std::strcmp(token, "Extension"))  {
             type = MODULE; 
+
+        } else if(! std::strcmp(token, "MimeType"))  {
+            type = MIME; 
 
         } else  {
             
@@ -139,6 +153,21 @@ Config::explodeRow(char* row)
 
                     break;
 
+                case MIME:
+                    par[n_token] = new char[std::strlen(token)+1];
+                    std::strcpy(par[n_token], token);
+                    n_token++;
+
+                    if(n_token == 2)  {
+                        mimes.insert( MimePair(std::string(par[0]), std::string(par[1])) );
+
+                        type = OTHER;
+                    }
+
+                    break;
+
+                   
+
                 default:   // WUT?
                     return false;
                 
@@ -165,6 +194,31 @@ std::string
 Config::getExtHandler(const std::string& key)  const
 {
     return (modules[key]);
+}
+
+
+std::string
+Config::getMimeType(const std::string& filename) const
+{
+    // get extension
+    std::size_t beginExt = filename.find_first_of(".", 1);
+    std::string type = filename.substr(
+                                  beginExt+1, 
+                                  filename.find_first_of(
+                                                      beginExt, 
+                                                      filename.find_first_of(" ", beginExt) - beginExt
+                                                   )
+                                 );
+ 
+    MimeTable::const_iterator MI;
+
+    for(MI = mimes.begin(); MI != mimes.end(); MI++)  {
+        if(MI->first == type)  {
+            return (MI->second);
+        }
+    }
+
+    return "";
 }
 
 

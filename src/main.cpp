@@ -98,7 +98,9 @@ main(int argc, char** argv)
 
                 std::cout << std::endl << "Extensions Handlers: "                                     << std::endl;
                 std::cout << "   php:\t\t"            << serverConfig->getExtHandler("php")           << std::endl;
+                std::cout << std::endl;
             }
+
 
             server = new xzHTTPd::Server::Server(serverConfig);
             server->start(deamon);
