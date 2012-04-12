@@ -8,7 +8,7 @@ Compiled with:
 To install:
 
     $ su - root
-    # ./install.sh
+    # make install
 
 Description:
 
