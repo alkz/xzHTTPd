@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SOCKET_CPP__
-#define __XZHTTPD__SOCKET_CPP__
-
-
 #include "Socket.hpp"
 
 
@@ -180,6 +176,3 @@ Socket::operator >>(std::string& s)
 
 
 }
-
-
-#endif

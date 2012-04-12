@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__UTILITY_CPP__
-#define __XZHTTPD__UTILITY_CPP__ 
-
-
 #include "Utility.hpp"
 
 
@@ -45,6 +41,3 @@ Utility::getTimeStamp(void)
 
 
 }
-
-
-#endif

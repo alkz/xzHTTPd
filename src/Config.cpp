@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CONFIG_CPP__
-#define __XZHTTPD__CONFIG_CPP__ 
-
-
 #include "Config.hpp"
 
 
@@ -77,8 +73,7 @@ Config::parse(void)
 
 
 bool
-Config::explodeRow(char* row)
-{        
+Config::explodeRow(char* row) {        
     enum rowType { PARAMETER, MODULE, MIME, OTHER };
 
     unsigned int n_token = 0;
@@ -184,23 +179,14 @@ Config::getExtHandler(const std::string& key)  const
 }
 
 
+
 std::string
-Config::getMimeType(const std::string& filename) const
+Config::getMimeType(const std::string& extension) const
 {
-    // get extension
-    std::size_t beginExt = filename.find_first_of(".", 1);
-    std::string type = filename.substr(
-                                  beginExt+1, 
-                                  filename.find_first_of(
-                                                      beginExt, 
-                                                      filename.find_first_of(" ", beginExt) - beginExt
-                                                   )
-                                 );
- 
     MimeTable::const_iterator MI;
 
     for(MI = mimes.begin(); MI != mimes.end(); MI++)  {
-        if(MI->first == type)  {
+        if(MI->first == extension)  {
             return (MI->second);
         }
     }
@@ -222,5 +208,3 @@ Config::getFileName(void)  const
 
 }
 
-
-#endif

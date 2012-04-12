@@ -17,17 +17,8 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CLIENT_HPP__
-#define __XZHTTPD__CLIENT_HPP__ 
-
-
-#include <fstream>
-
-
-#include "includer.hpp"
-#include "Config.hpp"
-#include "Socket.hpp"
-#include "HTTPResponse.hpp"
+#ifndef __XZHTTPD__THREAD_HPP__
+#define __XZHTTPD__THREAD_HPP__
 
 
 namespace xzHTTPd  {
@@ -36,36 +27,14 @@ namespace xzHTTPd  {
 namespace Server  {
 
 
-class Client
+class Thread
 {
     public:
 
-        Client(Socket*, Config::Config*, Log::Logger*);
-        ~Client();
-
-        void handleRequest(void);
-
-    private:
-
-        std::string getFileName(void) const;
-        std::string getFileContent(const std::string&) const;
-        std::string getExtension(const std::string&) const;
-
-    private:
-
-        std::string request;
-
-        Socket* clientSocket;
-        Config::Config* serverConf;
-        Log::Logger* logger;
-
+        Thread();
 };
 
 
 }
 
-
 }
-
-
-#endif

@@ -17,47 +17,22 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CLIENT_HPP__
-#define __XZHTTPD__CLIENT_HPP__ 
-
-
-#include <fstream>
-
-
-#include "includer.hpp"
-#include "Config.hpp"
-#include "Socket.hpp"
-#include "HTTPResponse.hpp"
+#ifndef __XZHTTPD__PHP_MODULE_HPP__
+#define __XZHTTPD__PHP_MODULE_HPP__ 
 
 
 namespace xzHTTPd  {
 
 
-namespace Server  {
+namespace Modules  {
 
 
-class Client
+class PHPModule
 {
     public:
 
-        Client(Socket*, Config::Config*, Log::Logger*);
-        ~Client();
-
-        void handleRequest(void);
-
-    private:
-
-        std::string getFileName(void) const;
-        std::string getFileContent(const std::string&) const;
-        std::string getExtension(const std::string&) const;
-
-    private:
-
-        std::string request;
-
-        Socket* clientSocket;
-        Config::Config* serverConf;
-        Log::Logger* logger;
+        
+        
 
 };
 

@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__SERVER_CPP__
-#define __XZHTTPD__SERVER_CPP__ 
-
-
 #include "Server.hpp"
 
 
@@ -122,7 +118,6 @@ Server::start(bool deamon)
             log << "[" << Utility::getTimeStamp() << "] - Failed to join thread client.\n";
             throw ( Exception::Exception(Exception::Exception::SERVER_JOIN_THREAD) );
         }
-       
     }
 
 }
@@ -144,7 +139,6 @@ processClient(void* arg)
     } catch (Exception::Exception& e)  {
         std::cerr << e.what() << std::endl;
     }
-    
 }
 
 
@@ -152,6 +146,3 @@ processClient(void* arg)
 
 
 }
-
-
-#endif

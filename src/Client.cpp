@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__CLIENT_CPP__
-#define __XZHTTPD__CLIENT_CPP__ 
-
-
 #include "Client.hpp"
 
 
@@ -63,17 +59,15 @@ Client::handleRequest(void)
 
     // Bulding the response
     std::string fileName = getFileName();
-    std::string fileContent = getFileContent(fileName);
+    std::string content = getFileContent(fileName);
 
-    HTTPResponse *response = new HTTPResponse();
+    HTTPResponse* response = new HTTPResponse();
 
-    if(! fileContent.length())  {
+    if(! content.length())  {
         response->setHeader("Connection",    "close");
         response->setHeader("Content-Type",  "text/html");
         response->setHeader("Server",        "xzHTTPd");
-        response->setStatus(404);
-
-        std::string content;
+        response->setStatus(404); 
         content   =  "<html><head><title>404 - Gaypride</title></head>"
                      "<body><h2>404 - Page not found gay</h2><hr />"
                      "<i><h5>xzHTTPd v";
@@ -85,12 +79,17 @@ Client::handleRequest(void)
         log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << response->getHeader() << "\n\n";
 
     } else  {
-        response->setHeader("Content-Type",   serverConf->getMimeType(fileName));
+        std::string ext = getExtension(fileName);
+
+        if(serverConf->getExtHandler(ext) == "default")  {
+        }
+
+        response->setHeader( "Content-Type",   serverConf->getMimeType(ext) );
         response->setHeader("Server",         "xzHTTPd");
-        response->setMethod(request.substr( 0, request.find_first_of(" ") ));
+        response->setMethod( request.substr( 0, request.find_first_of(" ") ) );
         response->setStatus(200);
 
-        response->setContent(fileContent);
+        response->setContent(content);
 
         socket << response->getHeader() << response->getContent();
         log << "[" << Utility::getTimeStamp() << "]" << "\nResponse: \n" << response->getHeader() << fileName << "\n\n\n\n";
@@ -101,7 +100,7 @@ Client::handleRequest(void)
 
 
 std::string
-Client::getFileName()
+Client::getFileName() const
 {
     std::size_t begin = request.find_first_of("/");
     std::string fileName = request.substr(
@@ -130,7 +129,7 @@ Client::getFileName()
 
 
 std::string
-Client::getFileContent(const std::string& name)
+Client::getFileContent(const std::string& name) const
 {
     std::ifstream f;     f.open(name.c_str(), std::ios::binary);
     if( !f.is_open() )  {
@@ -152,9 +151,24 @@ Client::getFileContent(const std::string& name)
 }
 
 
+
+std::string
+Client::getExtension(const std::string& filename) const
+{
+    std::size_t beginExt = filename.find_first_of(".", 1);
+    std::string type = filename.substr(
+                                  beginExt+1, 
+                                  filename.find_first_of(
+                                                      beginExt, 
+                                                      filename.find_first_of(" ", beginExt) - beginExt
+                                                   )
+                                 );
+
+    return type;
 }
 
 
 }
 
-#endif
+
+}

@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__HTTP_contentONSE_CPP__
-#define __XZHTTPD__HTTP_contentONSE_CPP__
-
-
 #include "HTTPResponse.hpp"
 
 
@@ -155,6 +151,3 @@ HTTPResponse::initStatusCodes(void)
 
 
 }
-
-
-#endif

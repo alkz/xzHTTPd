@@ -17,10 +17,6 @@
 ****************************************************************************/
 
 
-#ifndef __XZHTTPD__LOG_CPP__
-#define __XZHTTPD__LOG_CPP__ 
-
-
 #include "Log.hpp"
 
 
@@ -93,6 +89,3 @@ Logger::operator <<(const std::string& str)
 
 
 }
-
-
-#endif
